@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+
+.container {
+  margin: 50px auto;
+  width: 960px;
+  height: 480px;
+  position:relative;
+  overflow: hidden;
+}
+
+#womanVideo {
+  width: 960px;
+  height: auto;
+  z-index: -1;
+}
+
+.imgContainer {
+  width: 960px;
+  height: 480px;
+  border: 2px solid black;
+  position:absolute;
+  top: 0;
+  left:0;
+}
+#womanImg {
+  width: 960px;
+  height: auto;
+  position:absolute;
+  top:0;
+  left: 0;
+  z-index: 100;
+  display: none;
+}
+
