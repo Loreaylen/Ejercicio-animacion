@@ -38,3 +38,18 @@
   display: none;
 }
 
+.secondContainer {
+  width: 400px;
+  height: 200px;
+  border: 1px solid black;
+}
+
+.draggable {
+  width: 240px;
+  height: 480px;
+  opacity: 0.5;
+  border:1px solid black;
+  background-color: red;
+  clip-path: polygon(0 0, 100% 0, 162px 162px);
+  cursor:pointer;
+}
