@@ -1,0 +1,24 @@
+.piece1 {
+  width: 240px;
+  height: 480px;
+  opacity: 0.5;
+  border:1px solid black;
+  background-color: red;
+  clip-path: polygon(0 0, 100% 0, 162px 162px);
+  cursor:pointer;
+  position:absolute;
+}
+.piece2 {
+  width: 240px;
+  height: 480px;
+  opacity: 0.5;
+  border:1px solid black;
+  background-color: blueviolet;
+  clip-path: polygon(0 0, 92px 92px, 0 100%);
+  cursor:pointer;
+  position:absolute;
+}
+
+.draggable.dragging {
+  opacity: 0.5;
+}
