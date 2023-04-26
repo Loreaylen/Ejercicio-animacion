@@ -2,7 +2,6 @@
   width: 240px;
   height: 480px;
   opacity: 0.5;
-  border:1px solid black;
   background-color: red;
   clip-path: polygon(0 0, 100% 0, 162px 162px);
   cursor:pointer;
@@ -11,14 +10,27 @@
 .piece2 {
   width: 240px;
   height: 480px;
-  opacity: 0.5;
-  border:1px solid black;
+  opacity: 0.9;
   background-color: blueviolet;
   clip-path: polygon(0 0, 92px 92px, 0 100%);
   cursor:pointer;
   position:absolute;
 }
 
+.draggable {
+  user-select: none;
+}
+
 .draggable.dragging {
-  opacity: 0.5;
+  opacity: 1;
+ 
+}
+
+.return {
+  transform: translate(-100%,0);
+  transition: transform 0.3s ease-in-out;
+}
+
+img.draggable {
+  object-fit: cover;
 }
