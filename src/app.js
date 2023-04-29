@@ -2,55 +2,58 @@ const draggables = document.querySelectorAll('.draggable'),
       pieceContainer = document.querySelectorAll('.pieceContainer'),
       secondContainer = document.querySelector('.secondContainer'),
       regex = /(piece)/g;
+let mousePosition = {x: null, y:null},
+    mouseDown = false,
+    selectedDraggable = null,
+    diff = {x: null, y: null},
+    resetTransition = false,
+    transitionTime = 400;
+
+
+window.addEventListener('mousemove', e => {
+  mousePosition.x = e.clientX;
+  mousePosition.y = e.clientY
+  console.log(mousePosition)
+  if(!mouseDown) return;
+
+  let offsetY = mousePosition.y - diff.y;
+    let offsetX = mousePosition.x - diff.x;
+    // selectedDraggable.style.top = offsetY + 'px';
+    // selectedDraggable.style.left = offsetX + 'px';
+})
 
 
 // Lista de divs arrastrables, a cada uno le agrego una clase dragging cuando empiece a arrastrarse
 // Cuando lo suelte se eliminará la clase 
 draggables.forEach((draggable) => {
-  const initial = draggable.getBoundingClientRect();
+  // const initial = draggable.getBoundingClientRect();
 
-  draggable.addEventListener('dragstart', e => {
-    draggable.classList.add('dragging')
-    console.log(e.dataTransfer.effectAllowed)
-    setTimeout(() => draggable.classList.add('invisible', 0))
+  draggable.addEventListener('mousedown', e => {
+    if(!mousePosition || resetTransition) return;
+    mouseDown = true;
+    selectedDraggable = e.target.value; 
+    console.log(selectedDraggable)// Seleccionar el draggable
+    diff.y = mousePosition.y - draggable.offsetTop
+    diff.x = mousePosition.x - draggable.offsetLeft // Ver si esto está bien para calcular el offset del elemento
+    let offsetY = mousePosition.y - diff.y;
+    let offsetX = mousePosition.x - diff.x;
+    draggable.style.top = offsetY + 'px';
+    draggable.style.left = offsetX + 'px';
+    draggable.style.zIndex = '1000';
+    draggable.classList.add('dragging');
   })
 
-  draggable.addEventListener('dragend', () => {
-    const isContainer = Object.values(draggable.parentNode.classList).includes('pieceContainer')
-    console.log(isContainer)
-    draggable.classList.remove('dragging')
-    draggable.classList.remove('invisible')
-      
-    })
+  draggable.addEventListener('mouseup', e => mouseDown = false);
+
     
   })
 
+// en la función mousemove comprobar la clase del elemento que seleccioné con el del contenedor en el que se encuentra (piece)
+// Si los nombres de las clases coinciden,  impido mover el elemento con un booleano
 
-// Para cada contenedor de piezas agrego un evento dragover
-// La función devuelve el elemento más cercano según la posición del mouse en ese momento
-// Guardo el nombre de la clase que coincida con "piece", hago lo mismo con el elemento arrastrado
-// Si los nombres de las clases coinciden, meto el arrastrado al contenedor y le saco el draggable
+//para el mousedown hago la misma comprobación de las clases (capaz sea mejor separarla en una función aparte)
+// Si coinciden, meto el draggable en su contenedor, sino, disparo la animación para volver a su posición original
 
-
-pieceContainer.forEach((container) => {
-  container.addEventListener('dragover', e => {
-    const x = e.clientX;
-    const y = e.clientY;
-
-    const closestDiv = document.elementFromPoint(x,y);
-    const closestPiece = Object.values(closestDiv.classList).find((el) => regex.test(el));
-   
-    const currDraggable = document.querySelector('.dragging');
-    const pieceNumber = Object.values(currDraggable.classList).find((el) => regex.test(el));
-
-    if(closestPiece === pieceNumber){
-      e.preventDefault();
-      container.appendChild(currDraggable);
-      currDraggable.draggable = false;
-    }
-  })
-
-})
 
 
 
