@@ -5,21 +5,27 @@ const draggables = document.querySelectorAll('.draggable'),
 let mousePosition = { x: null, y: null },
   mouseDown = false,
   selectedDraggable = null,
+  pieceNumberOfDraggable = null,
   diff = { x: null, y: null },
   resetTransition = false,
   transitionTime = 400;
 
+  
+// Función para buscar la clase con el número de la pieza
+const getPieceClass = (element) => {
+  return Object.values(element.classList).find(el => regex.test(el))
+}
 
 window.addEventListener('mousemove', e => {
   mousePosition.x = e.clientX;
   mousePosition.y = e.clientY
-  console.log(mousePosition)
   if (!mouseDown) return;
 
   let offsetY = mousePosition.y - diff.y;
   let offsetX = mousePosition.x - diff.x;
   selectedDraggable.style.top = offsetY + 'px';
   selectedDraggable.style.left = offsetX + 'px';
+ 
 })
 
 
@@ -30,6 +36,7 @@ draggables.forEach((draggable) => {
 
   draggable.addEventListener('mousedown', e => {
     if (!mousePosition || resetTransition) return;
+    
     mouseDown = true;
     selectedDraggable = draggable;  // Seleccionar el draggable
     diff.y = mousePosition.y - draggable.offsetTop
@@ -40,11 +47,10 @@ draggables.forEach((draggable) => {
     draggable.style.left = offsetX + 'px';
     draggable.style.zIndex = '1000';
     draggable.classList.add('dragging');
+    pieceNumberOfDraggable = getPieceClass(draggable)
   })
 
   draggable.addEventListener('mouseup', e => mouseDown = false);
-
-
 })
 
 // en la función mousemove comprobar la clase del elemento que seleccioné con el del contenedor en el que se encuentra (piece)
