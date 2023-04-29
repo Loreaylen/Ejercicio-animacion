@@ -1,25 +1,25 @@
 const draggables = document.querySelectorAll('.draggable'),
-      pieceContainer = document.querySelectorAll('.pieceContainer'),
-      secondContainer = document.querySelector('.secondContainer'),
-      regex = /(piece)/g;
-let mousePosition = {x: null, y:null},
-    mouseDown = false,
-    selectedDraggable = null,
-    diff = {x: null, y: null},
-    resetTransition = false,
-    transitionTime = 400;
+  pieceContainer = document.querySelectorAll('.pieceContainer'),
+  secondContainer = document.querySelector('.secondContainer'),
+  regex = /(piece)/g;
+let mousePosition = { x: null, y: null },
+  mouseDown = false,
+  selectedDraggable = null,
+  diff = { x: null, y: null },
+  resetTransition = false,
+  transitionTime = 400;
 
 
 window.addEventListener('mousemove', e => {
   mousePosition.x = e.clientX;
   mousePosition.y = e.clientY
   console.log(mousePosition)
-  if(!mouseDown) return;
+  if (!mouseDown) return;
 
   let offsetY = mousePosition.y - diff.y;
-    let offsetX = mousePosition.x - diff.x;
-    // selectedDraggable.style.top = offsetY + 'px';
-    // selectedDraggable.style.left = offsetX + 'px';
+  let offsetX = mousePosition.x - diff.x;
+  selectedDraggable.style.top = offsetY + 'px';
+  selectedDraggable.style.left = offsetX + 'px';
 })
 
 
@@ -29,10 +29,9 @@ draggables.forEach((draggable) => {
   // const initial = draggable.getBoundingClientRect();
 
   draggable.addEventListener('mousedown', e => {
-    if(!mousePosition || resetTransition) return;
+    if (!mousePosition || resetTransition) return;
     mouseDown = true;
-    selectedDraggable = e.target.value; 
-    console.log(selectedDraggable)// Seleccionar el draggable
+    selectedDraggable = draggable;  // Seleccionar el draggable
     diff.y = mousePosition.y - draggable.offsetTop
     diff.x = mousePosition.x - draggable.offsetLeft // Ver si esto está bien para calcular el offset del elemento
     let offsetY = mousePosition.y - diff.y;
@@ -45,8 +44,8 @@ draggables.forEach((draggable) => {
 
   draggable.addEventListener('mouseup', e => mouseDown = false);
 
-    
-  })
+
+})
 
 // en la función mousemove comprobar la clase del elemento que seleccioné con el del contenedor en el que se encuentra (piece)
 // Si los nombres de las clases coinciden,  impido mover el elemento con un booleano
