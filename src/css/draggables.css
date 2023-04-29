@@ -30,6 +30,3 @@
   transition: transform 0.3s ease-in-out;
 }
 
-img.draggable {
-  object-fit: cover;
-}
