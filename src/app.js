@@ -25,25 +25,38 @@ const getClosestContainer = (draggable) => {
   const draggableRect = draggable.getBoundingClientRect();
   
 console.log(draggableRect)
+// capaz cambiar por un map?
+const closestmap = listOfPieceContainers.map((container) => {
+  const containerRect = container.getBoundingClientRect();
+    const distanceX = draggableRect.x - containerRect.x;
+    const distanceY = draggableRect.y - containerRect.y;
+    const distance = Math.hypot((distanceX ** 2) + (distanceY ** 2));
+    return {distance: distance, container: container}
+})
+console.log(closestmap)
 
-  const closest = listOfPieceContainers.reduce((closest, curr) => {
-    const containerRect = curr.getBoundingClientRect();
-    const distanceX = Math.abs(draggableRect.x - containerRect.x);
-    const distanceY = Math.abs(draggableRect.y - containerRect.y);
-    const distance = distanceX ** 2 + distanceY ** 2;
-    console.log(distance)
-    if (distance <= 15) { 
-      return {distance: distance, element: curr}
-    } 
-    return closest;
-  }, {distance: Infinity });
-  
-  if (closest.distance < Infinity) {
-    return closest.element;
-  } else {
-    return false;
-  }
+const filtered = closestmap.filter(container => {
+ return container.distance < 1900 && container.distance > 350 
+})
 
+console.log(filtered)
+  // const closest = listOfPieceContainers.reduce((closest, curr) => {
+  //   const containerRect = curr.getBoundingClientRect();
+  //   const distanceX = draggableRect.x - containerRect.x;
+  //   const distanceY = draggableRect.y - containerRect.y;
+  //   const distance = Math.hypot((distanceX ** 2) + (distanceY ** 2));
+  //   console.log(distance, curr)
+  //   if (closest.distance < 1900 && closest.distance > 350) { 
+  //     return {distance: distance, element: curr}
+  //   } 
+  //   return closest;
+  // }, {distance: Infinity });
+  // console.log(closest)
+  // if (closest.distance < 1900 && closest.distance > 350) {
+  //   return closest.element;
+  // } else {
+  //   return false;
+  // }
 }
 
 
