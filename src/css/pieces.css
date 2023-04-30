@@ -1,4 +1,17 @@
-.pieceContainer {
+:root {
+  --first-Section: 0;
+  --second-Section: 240px;
+  --third-Section:  480px;
+  --fourth-Section: 720px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.demoPieceContainer {
   width: 240px;
   height: 480px;
   position:absolute;
@@ -6,10 +19,24 @@
   top: 0;
 }
 
+.nodeContainer {
+  width: 240px;
+  height: 480px;
+  position:absolute;
+  top: 0;
+}
+
+.pieceNode {
+  width: 30px;
+  height: 30px;
+  border: 2px dashed black;
+  position: absolute;
+}
+
 /*--------------FIRST SECTION (1/4)-----------*/
 
 .firstSection {
-  left: 0;
+  left: var(--first-Section);
 }
 
 #one {
@@ -17,9 +44,19 @@
   clip-path: polygon(0 0, 100% 0, 162px 162px);
 }
 
+.piece1 {
+  left: 40px;
+  top: 5px;
+}
+
 #two {
   background-color: blueviolet;
   clip-path: polygon(0 0, 92px 92px, 0 100%);
+}
+
+.piece2 {
+  left: 1px;
+  top: 30px;
 }
 
 #three {
@@ -27,9 +64,19 @@
   clip-path: polygon(100% 0, 162px 162px, 100% 50%);
 }
 
+.piece3 {
+  left: 200px;
+  top: 85px;
+}
+
 #four {
   background-color: aquamarine;
   clip-path: polygon(92px 92px, 162px 162px, 0 100%);
+}
+
+.piece4 {
+  left: 87px;
+  top: 120px;
 }
 
 #five {
@@ -37,9 +84,19 @@
   clip-path: polygon(162px 162px, 243px 243px, 100% 100%, 50% 100%, 50% 50%);
 }
 
+.piece5 {
+  left: 150px;
+  top: 185px;
+}
+
 #six {
   background-color: blue;
   clip-path: polygon(50% 50%, 50% 100%, 82px 320px);
+}
+
+.piece6 {
+  left: 89px;
+  top: 305px;
 }
 
 #seven {
@@ -47,10 +104,15 @@
   clip-path: polygon(82px 320px, 50% 100%, 0 100%);
 }
 
+.piece7 {
+  left: 61px;
+  top: 362px;
+}
+
 /*--------------SECOND SECTION (2/4)-----------*/
 
 .secondSection {
-  left: 240px;
+  left: var(--second-Section);
 }
 
 #eight {
@@ -58,9 +120,20 @@
   clip-path: polygon(0 0, 100% 0, 100% 160px, 50% 50%);
 }
 
+.piece8 {
+  left: 20px;
+  top: 5px;
+}
+
+
 #nine {
   background-color: yellow;
   clip-path: polygon(50% 50%, 100% 160px, 100% 50%);
+}
+
+.piece9 {
+  left: 200px;
+  top: 200px;
 }
 
 #ten {
@@ -68,9 +141,19 @@
   clip-path: polygon(0 0,50% 50%, 80px 321px, 0 242px);
 }
 
+.piece10 {
+  left: 2px;
+  top: 150px;
+}
+
 #eleven {
   background-color: purple;
   clip-path: polygon(0 242px, 80px 321px, 0 100%);
+}
+
+.piece11 {
+  left: 2px;
+  top: 290px;
 }
 
 #twelve {
@@ -78,26 +161,43 @@
   clip-path: polygon(50% 50%, 100% 50%, 100% 100%);
 }
 
+.piece12 {
+  left: 100px;
+  top: 290px;
+}
+
 #thirteen {
   background-color: lightgreen;
   clip-path: polygon(50% 50%, 80px 321px, 100% 100%);
+}
+
+.piece13 {
+  left: 200px;
+  top: 290px;
 }
 
 #fourteen {
   background-color: green;
   clip-path: polygon(0 100%, 80px 321px, 100% 100%);
 }
-
+.piece14 {
+  left: 70px;
+  top: 350px;
+}
 /*--------------THIRD SECTION (3/4)-----------*/
 
 .thirdSection {
-  left: 480px;
+  left: var(--third-Section);
 }
 
 #fifteen {
   background-color: brown;
   clip-path: polygon(0 0, 80px 401px, 0 100%);
- 
+}
+
+.piece15 {
+  left: 2px;
+  top: 350px;
 }
 
 #sixteen {
@@ -105,9 +205,19 @@
   clip-path: polygon(0 0, 162px 320px, 80px 401px);
 }
 
+.piece16 {
+  left: 30px;
+  top: 125px;
+}
+
 #seventeen {
   background-color: red;
   clip-path: polygon(0 0, 50% 0, 80px 160px);
+}
+
+.piece17 {
+  left: 15px;
+  top: 1px;
 }
 
 #eighteen {
@@ -115,9 +225,19 @@
   clip-path: polygon(50% 0, 50% 50%, 80px 160px);
 }
 
+.piece18 {
+  left: 88px;
+  top: 135px;
+}
+
 #nineteen {
   background-color: lime;
   clip-path: polygon(50% 0, 100% 0, 100% 50%, 162px 320px, 50% 50%);
+}
+
+.piece19 {
+  left: 125px;
+  top: 1px;
 }
 
 #twenty {
@@ -125,15 +245,24 @@
   clip-path: polygon(162px 320px, 100% 50%, 100% 100%);
 }
 
+.piece20 {
+  left: 185px;
+  top: 300px;
+}
+
 #twentyOne {
   background-color: blue;
   clip-path: polygon(0 100%, 162px 320px, 100% 100%);
 }
 
+.piece21 {
+  left: 135px;
+  top: 350px;
+}
 /*--------------FOURTH SECTION (4/4)-----------*/
 
 .fourthSection {
-  left: 720px;
+  left: var(--fourth-Section);
 }
 
 #twentyTwo {
@@ -141,10 +270,19 @@
   clip-path: polygon(0 0, 100% 0, 81px 158px);
 }
 
+.piece22 {
+  left: 18px;
+  top: 1px;
+}
 
 #twentyThree {
   background-color: orange;
   clip-path: polygon(0 0, 81px 158px, 0 50%);
+}
+
+.piece23 {
+  left: 1px;
+  top: 70px;
 }
 
 #twentyFour {
@@ -152,9 +290,19 @@
   clip-path: polygon(81px 158px, 100% 0, 50% 50%);
 }
 
+.piece24 {
+  left: 100px;
+  top: 150px;
+}
+
 #twentyFive {
   background-color: green;
   clip-path: polygon(0 50%, 81px 158px, 50% 50%, 0 100%);
+}
+
+.piece25 {
+  left: 60px;
+  top: 190px;
 }
 
 #twentySix {
@@ -162,12 +310,27 @@
   clip-path: polygon(50% 50%, 100% 0, 100% 50%);
 }
 
+.piece26 {
+  left: 150px;
+  top: 190px;
+}
+
 #twentySeven {
   background-color: aquamarine;
   clip-path: polygon(50% 50%, 100% 50%, 100% 320px);
 }
 
+.piece27 {
+  left: 190px;
+  top: 245px;
+}
+
 #twentyEight {
   background-color: pink;
   clip-path: polygon(50% 50%, 100% 320px, 100% 100%, 0 100%);
+}
+
+.piece28 {
+  left: 130px;
+  top: 290px;
 }

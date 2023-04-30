@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,53 +10,103 @@
   <link rel="stylesheet" href="./css/draggables.css">
   <title>Ejercicio de animación</title>
 </head>
+
 <body>
-<main>
-  <div class="container">
-    <video id="womanVideo">
-      <source src="../media/mujer-142566.mp4" type="video/mp4">
-    </video>
-    <div class="imgContainer">
-      <!-- <img id="womanImg" src="../media/ezgif-frame-001.jpg" alt=""> -->
-      <div class="pieceContainer firstSection piece1" id="one"></div>
-      <div class="pieceContainer firstSection piece2" id="two"></div>
-      <div class="pieceContainer firstSection" id="three"></div>
-      <div class="pieceContainer firstSection" id="four"></div>
-      <div class="pieceContainer firstSection" id="five"></div>
-      <div class="pieceContainer firstSection" id="six"></div>
-      <div class="pieceContainer firstSection" id="seven"></div>
+  <main>
+    <div class="container">
+      <video id="womanVideo">
+        <source src="../media/mujer-142566.mp4" type="video/mp4">
+      </video>
+      <div class="imgContainer">
+        <!-- <img id="womanImg" src="../media/ezgif-frame-001.jpg" alt=""> -->
+        <div class="nodeContainer firstSection">
+          <div class="pieceNode piece1"></div>
+          <div class="pieceNode piece2"></div>
+          <div class="pieceNode piece3"></div>
+          <div class="pieceNode piece4"></div>
+          <div class="pieceNode piece5"></div>
+          <div class="pieceNode piece6"></div>
+          <div class="pieceNode piece7"></div>
+        </div>
+        <div class="nodeContainer secondSection">
+          <div class="pieceNode  piece8"></div>
+          <div class="pieceNode  piece9"></div>
+          <div class="pieceNode piece10"></div>
+          <div class="pieceNode piece11"></div>
+          <div class="pieceNode  piece12"></div>
+          <div class="pieceNode  piece13"></div>
+          <div class="pieceNode  piece14"></div>
+        </div>
+        <div class="nodeContainer thirdSection">
+          <div class="pieceNode piece15"></div>
+          <div class="pieceNode piece16"></div>
+          <div class="pieceNode piece17"></div>
+          <div class="pieceNode piece18"></div>
+          <div class="pieceNode piece19"></div>
+          <div class="pieceNode piece20"></div>
+          <div class="pieceNode piece21"></div>
+        </div>
+        <div class="nodeContainer fourthSection">
+          <div class="pieceNode piece22"></div>
+          <div class="pieceNode piece23"></div>
+          <div class="pieceNode piece24"></div>
+          <div class="pieceNode piece25"></div>
+          <div class="pieceNode piece26"></div>
+          <div class="pieceNode piece27"></div>
+          <div class="pieceNode piece28"></div>
+        </div>
+        <div class="demoPieceContainer firstSection" id="one"></div>
+        <div class="demoPieceContainer firstSection" id="two"></div>
+        <div class="demoPieceContainer firstSection" id="three"></div>
+        <div class="demoPieceContainer firstSection" id="four"></div>
+        <div class="demoPieceContainer firstSection" id="five"></div>
+        <div class="demoPieceContainer firstSection" id="six"></div>
+        <div class="demoPieceContainer firstSection" id="seven"></div>
 
-      <div class="pieceContainer secondSection" id="eight"></div>
-      <div class="pieceContainer secondSection" id="nine"></div>
-      <div class="pieceContainer secondSection" id="ten"></div>
-      <div class="pieceContainer secondSection" id="eleven"></div>
-      <div class="pieceContainer secondSection" id="twelve"></div>
-      <div class="pieceContainer secondSection" id="thirteen"></div>
-      <div class="pieceContainer secondSection" id="fourteen"></div>
 
-      <div class="pieceContainer thirdSection" id="fifteen"></div>
-      <div class="pieceContainer thirdSection" id="sixteen"></div>
-      <div class="pieceContainer thirdSection" id="seventeen"></div>
-      <div class="pieceContainer thirdSection" id="eighteen"></div>
-      <div class="pieceContainer thirdSection" id="nineteen"></div>
-      <div class="pieceContainer thirdSection" id="twenty"></div>
-      <div class="pieceContainer thirdSection" id="twentyOne"></div>
 
-      <div class="pieceContainer fourthSection" id="twentyTwo"></div>
-      <div class="pieceContainer fourthSection" id="twentyThree"></div>
-      <div class="pieceContainer fourthSection" id="twentyFour"></div>
-      <div class="pieceContainer fourthSection" id="twentyFive"></div>
-      <div class="pieceContainer fourthSection" id="twentySix"></div>
-      <div class="pieceContainer fourthSection" id="twentySeven"></div>
-      <div class="pieceContainer fourthSection" id="twentyEight"></div>
-      
+        <div class="demoPieceContainer secondSection" id="eight"></div>
+        <div class="demoPieceContainer secondSection" id="nine"></div>
+        <div class="demoPieceContainer secondSection" id="ten"></div>
+        <div class="demoPieceContainer secondSection" id="eleven"></div>
+        <div class="demoPieceContainer secondSection" id="twelve"></div>
+        <div class="demoPieceContainer secondSection" id="thirteen"></div>
+        <div class="demoPieceContainer secondSection" id="fourteen"></div>
+
+
+
+        <div class="demoPieceContainer thirdSection" id="fifteen"></div>
+        <div class="demoPieceContainer thirdSection" id="sixteen"></div>
+        <div class="demoPieceContainer thirdSection" id="seventeen"></div>
+        <div class="demoPieceContainer thirdSection" id="eighteen"></div>
+        <div class="demoPieceContainer thirdSection" id="nineteen"></div>
+        <div class="demoPieceContainer thirdSection" id="twenty"></div>
+        <div class="demoPieceContainer thirdSection" id="twentyOne"></div>
+
+
+
+        <div class="demoPieceContainer fourthSection" id="twentyTwo"></div>
+        <div class="demoPieceContainer fourthSection" id="twentyThree"></div>
+        <div class="demoPieceContainer fourthSection" id="twentyFour"></div>
+        <div class="demoPieceContainer fourthSection" id="twentyFive"></div>
+        <div class="demoPieceContainer fourthSection" id="twentySix"></div>
+        <div class="demoPieceContainer fourthSection" id="twentySeven"></div>
+        <div class="demoPieceContainer fourthSection" id="twentyEight"></div>
+
+
+
+      </div>
     </div>
-  </div>
-  <div class="secondContainer">
-    <div class="draggable piece1" id="draggableOne"></div>
-    <div class="draggable piece2"></div>
-  </div>
-</main>
+    <div class="secondContainer">
+      <div class="draggable draggable1" id="draggableOne">
+        <div class=" pieceNode piece1"></div>
+      </div>
+      <div class="draggable draggable2">
+        <div class="pieceNode piece2"></div>
+      </div>
+    </div>
+  </main>
   <script src="app.js"></script>
 </body>
+
 </html>

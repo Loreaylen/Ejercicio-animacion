@@ -1,29 +1,24 @@
-.piece1 {
+.draggable1 {
   width: 240px;
   height: 480px;
-  opacity: 0.5;
+  opacity: 0.4;
   background-color: red;
   clip-path: polygon(0 0, 100% 0, 162px 162px);
   cursor:pointer;
 }
-.piece2 {
+.draggable2 {
   width: 240px;
   height: 480px;
-  opacity: 0.9;
+  opacity: 0.4;
   background-color: blueviolet;
   clip-path: polygon(0 0, 92px 92px, 0 100%);
   cursor:pointer;
 }
 
 .draggable {
-  user-select: none;
   position:absolute;
 }
 
-.draggable.dragging {
-  opacity: 1;
- 
-}
 
 .return {
   transform: translate(-100%,0);
