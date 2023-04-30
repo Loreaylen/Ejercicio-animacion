@@ -24,7 +24,8 @@ const getClosestContainer = (draggable) => {
   const listOfPieceContainers = [...pieceContainer];
   return listOfPieceContainers.reduce((closest, curr) => {
 
-const offset = draggable.offsetTop - curr.offsetTop - curr.offsetHeight / 2
+const offset = draggable.offsetTop - curr.offsetTop - curr.offsetHeight 
+
 if (offset < 0 && offset > closest.offset) {
   return {offset: offset, element: curr}
 }
@@ -69,6 +70,7 @@ draggables.forEach((draggable) => {
     mouseDown = false
     console.log(getClosestContainer(draggable))
   });
+
 })
 
 // en la función mousemove comprobar la clase del elemento que seleccioné con el del contenedor en el que se encuentra (piece)
@@ -76,9 +78,3 @@ draggables.forEach((draggable) => {
 
 //para el mousedown hago la misma comprobación de las clases (capaz sea mejor separarla en una función aparte)
 // Si coinciden, meto el draggable en su contenedor, sino, disparo la animación para volver a su posición original
-
-
-
-
-// TESTS
-
