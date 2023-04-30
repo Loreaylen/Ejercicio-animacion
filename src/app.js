@@ -1,7 +1,8 @@
 const draggables = document.querySelectorAll('.draggable'),
-  pieceContainer = document.querySelectorAll('.pieceNode'),
+  pieceContainer = document.querySelectorAll('.pieceContainer'),
   secondContainer = document.querySelector('.secondContainer'),
   regex = /(piece)/g;
+
 let mousePosition = { x: null, y: null },
   mouseDown = false,
   selectedDraggable = null,
@@ -10,7 +11,6 @@ let mousePosition = { x: null, y: null },
   resetTransition = false,
   transitionTime = 400;
 
-  console.log([...pieceContainer])
 // Función para buscar la clase con el número de la pieza
 const getPieceClass = (element) => {
   return Object.values(element.classList).find(el => regex.test(el))
@@ -18,26 +18,34 @@ const getPieceClass = (element) => {
 
  // el offset debería calcular la distancia entre el draggable que estoy arrastrando y la pieza más cercana
 // para calcular la cercanía debería usar la posición en la que está el draggable y ver cuál es el container más cercano
-// se usa y porque necesito ver qué tan lejos está en relación al número negativo
 // y - top de la caja - height de la caja / 2
 
 const getClosestContainer = (draggable) => {
   const listOfPieceContainers = [...pieceContainer];
-  return listOfPieceContainers.reduce((closest, curr) => {
-    const draggableRect = draggable.getBoundingClientRect();
-    const containerRect = curr.getBoundingClientRect();
-    console.log('draggableRect', draggableRect)
-  console.log('containerRect', containerRect)
-  const containerCenterX = containerRect.left + containerRect.width / 2;
-  const containerCenterY = containerRect.top + containerRect.height / 2;
-  const distance = (draggableRect.left - containerCenterX) ** 2 + (draggableRect.top - containerCenterY) ** 2;
+  const draggableRect = draggable.getBoundingClientRect();
+  
+console.log(draggableRect)
 
-if (distance < closest.distance) {
-  return {distance: distance, element: curr}
+  const closest = listOfPieceContainers.reduce((closest, curr) => {
+    const containerRect = curr.getBoundingClientRect();
+    const distanceX = Math.abs(draggableRect.x - containerRect.x);
+    const distanceY = Math.abs(draggableRect.y - containerRect.y);
+    const distance = distanceX ** 2 + distanceY ** 2;
+    console.log(distance)
+    if (distance <= 15) { 
+      return {distance: distance, element: curr}
+    } 
+    return closest;
+  }, {distance: Infinity });
+  
+  if (closest.distance < Infinity) {
+    return closest.element;
+  } else {
+    return false;
+  }
+
 }
-else return closest
-  }, {distance: Infinity }).element
-}
+
 
 window.addEventListener('mousemove', e => {
   mousePosition.x = e.clientX;
@@ -54,7 +62,6 @@ window.addEventListener('mousemove', e => {
 // Lista de divs arrastrables, a cada uno le agrego una clase dragging cuando empiece a arrastrarse
 // Cuando lo suelte se eliminará la clase 
 draggables.forEach((draggable) => {
-  // const initial = draggable.getBoundingClientRect();
 
   draggable.addEventListener('mousedown', e => {
     if (!mousePosition || resetTransition) return;
@@ -87,15 +94,12 @@ draggables.forEach((draggable) => {
 // Si coinciden, meto el draggable en su contenedor, sino, disparo la animación para volver a su posición original
 
 
-// const draggableOne = document.querySelector('#draggableOne')
-// const dragRect = draggableOne.getBoundingClientRect()
-// console.log(dragRect.top, dragRect.left)
-// console.log(draggableOne.offsetX, draggableOne.offsetY)
+
 
 
 // TODO:
 /*
--Agregar todos los 'nodos' para las piezas y acomodarlos
+-Agregar todos los 'nodos' para las piezas y acomodarlos X
 -Cambiar los nombres de las clases -> los cuadraditos tienen que tener la clase 'pieceNode' y tanto el nodo como la pieza tienen que tener el número en una clase,
 la pieza va a tener un id con el número (para el clip-path) --> buscar sugerencias para nombrar las clases
 - Ajustar la función que calcula el offset para que sólo devuelva la pieza más cercana si tiene un offset de 15x15 respecto al contenedor
