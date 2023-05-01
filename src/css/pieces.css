@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-.demoPieceContainer {
+.demopContainer {
   width: 240px;
   height: 480px;
   position:absolute;
@@ -26,7 +26,7 @@
   top: 0;
 }
 
-.pieceNode {
+.node {
   width: 30px;
   height: 30px;
   border: 2px dashed black;
@@ -56,7 +56,7 @@
 
 .piece2 {
   left: 1px;
-  top: 30px;
+  top: 230px;
 }
 
 #three {
@@ -311,8 +311,8 @@
 }
 
 .piece26 {
-  left: 150px;
-  top: 190px;
+  left: 190px;
+  top: 110px;
 }
 
 #twentySeven {

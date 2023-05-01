@@ -1,5 +1,5 @@
 const draggables = document.querySelectorAll('.draggable'),
-  pieceContainer = document.querySelectorAll('.pieceContainer'),
+  pieceContainer = document.querySelectorAll('.pContainer'),
   secondContainer = document.querySelector('.secondContainer'),
   regex = /(piece)/g;
 
@@ -20,28 +20,32 @@ const getPieceClass = (element) => {
 // para calcular la cercanía debería usar la posición en la que está el draggable y ver cuál es el container más cercano
 // y - top de la caja - height de la caja / 2
 
-const getClosestContainer = (draggable) => {
+const getClosestContainer = (childOfDrag) => {
   const listOfPieceContainers = [...pieceContainer];
-  const draggableRect = draggable.getBoundingClientRect();
+  const childRect = childOfDrag.getBoundingClientRect();
 
   const closestmap = listOfPieceContainers.map((container) => {
     const containerRect = container.getBoundingClientRect();
-    const distanceX = draggableRect.x - containerRect.x;
-    const distanceY = draggableRect.y - containerRect.y;
+    const distanceX = childRect.x - containerRect.x;
+    const distanceY = childRect.y - containerRect.y;
     const distance = Math.hypot((distanceX ** 2) + (distanceY ** 2));
     return { distance: distance, container: container }
   })
-
   const filtered = closestmap.filter(container => {
-    if (container.distance < 1900 && container.distance > 350) {
+    if (container.distance <= 450) {
       return container
     }
     else return false
   })
-
   return filtered.length === 0 ? false : filtered[0].container
 }
 
+const matchClass = (currdrag, resultclass) => {
+
+const matchTo = getPieceClass(resultclass)
+
+
+}
 
 window.addEventListener('mousemove', e => {
   mousePosition.x = e.clientX;
@@ -53,7 +57,6 @@ window.addEventListener('mousemove', e => {
   selectedDraggable.style.top = offsetY + 'px';  // Con esto le asigno la posición en la que va a quedar el draggable cuando lo suelte
   selectedDraggable.style.left = offsetX + 'px';
 })
-
 
 // Lista de divs arrastrables, a cada uno le agrego una clase dragging cuando empiece a arrastrarse
 // Cuando lo suelte se eliminará la clase 
@@ -72,13 +75,14 @@ draggables.forEach((draggable) => {
     draggable.style.left = offsetX + 'px';
     draggable.style.zIndex = '1000';
     draggable.classList.add('dragging');
-    pieceNumberOfDraggable = getPieceClass(draggable)
-
   })
 
   draggable.addEventListener('mouseup', e => {
     mouseDown = false
-    console.log(getClosestContainer(draggable))
+    const child = draggable.children[0]
+    const match = getClosestContainer(child)
+    match ? matchClass(draggable, match) : false
+    draggable.classList.remove('dragging');
   });
 
 })
