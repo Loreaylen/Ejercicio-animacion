@@ -1,19 +1,21 @@
 const draggables = document.querySelectorAll('.draggable'),
   pieceContainer = document.querySelectorAll('.pContainer'),
   secondContainer = document.querySelector('.secondContainer'),
-  regex = /(piece)/g;
+  piece = /(piece)/g,
+  nodeContainer = /(nodeContainer)/g;
 
 let mousePosition = { x: null, y: null },
-  mouseDown = false,
-  selectedDraggable = null,
-  pieceNumberOfDraggable = null,
+   // ver si esto es util o no
+  mouseDown = false, // para que el elemento deje de cambiar de posición si se suelta el mouse
+  selectedDraggable = null, // Para la función de mousemove
   diff = { x: null, y: null }, // para que el mouse pueda arrastrar al draggable al lugar correcto
-  resetTransition = false,
-  transitionTime = 400;
+  startX = 0,
+  startY = 0;
 
+  
 // Función para buscar la clase con el número de la pieza
-const getPieceClass = (element) => {
-  return Object.values(element.classList).find(el => regex.test(el))
+const getPieceClass = (element, regex) => {
+  return Object.values(element.classList).find(el => regex.test(el)) || false
 }
 
 // el offset debería calcular la distancia entre el draggable que estoy arrastrando y la pieza más cercana
@@ -40,13 +42,30 @@ const getClosestContainer = (childOfDrag) => {
   return filtered.length === 0 ? false : filtered[0].container
 }
 
-const matchClass = (currdrag, resultclass) => {
-
-const matchTo = getPieceClass(resultclass)
-
-
+const matchClass = (draggable, child, resultclass) => {
+  const pieceNumber = getPieceClass(child, piece)
+  const matchTo = getPieceClass(resultclass, piece)
+  const parentNode = resultclass.parentNode // El contenedor padre del nodo para encajar la pieza (rectángulos)
+  if (pieceNumber === matchTo) {
+    parentNode.appendChild(draggable)
+    draggable.classList.remove('draggable')
+    draggable.removeAttribute('style')
+    draggable.classList.add('inside')
+    // triggerear transición
+  }
+  else {
+    return;
+  }
 }
-
+const resetTransition = (draggable) => {
+  draggable.style.transition = 'transform 0.3s';
+  draggable.style.transform = `translate(${startX}px, ${startY}px)`
+  setTimeout(() =>{
+  draggable.removeAttribute('transition')
+  draggable.removeAttribute('transform')
+  secondContainer.appendChild(draggable)
+  }, 300)
+}
 window.addEventListener('mousemove', e => {
   mousePosition.x = e.clientX;
   mousePosition.y = e.clientY
@@ -63,7 +82,12 @@ window.addEventListener('mousemove', e => {
 draggables.forEach((draggable) => {
 
   draggable.addEventListener('mousedown', e => {
-    if (!mousePosition || resetTransition) return;
+    const initial = draggable.getBoundingClientRect()
+    console.log(initial)
+    startX = e.clientX;
+    startY = e.clientY;
+    console.log(getPieceClass(draggable.parentNode, nodeContainer), 'ACA')
+    if (!mousePosition || getPieceClass(draggable.parentNode, nodeContainer)) return;
 
     mouseDown = true;
     selectedDraggable = draggable;  // Seleccionar el draggable
@@ -75,37 +99,25 @@ draggables.forEach((draggable) => {
     draggable.style.left = offsetX + 'px';
     draggable.style.zIndex = '1000';
     draggable.classList.add('dragging');
+    console.log(selectedDraggable, selectedDraggable.parentNode)
   })
 
   draggable.addEventListener('mouseup', e => {
     mouseDown = false
     const child = draggable.children[0]
     const match = getClosestContainer(child)
-    match ? matchClass(draggable, match) : false
+    match ? matchClass(draggable, child, match) : resetTransition(draggable)
     draggable.classList.remove('dragging');
   });
 
 })
 
-// en la función mousemove comprobar la clase del elemento que seleccioné con el del contenedor en el que se encuentra (piece)
-// Si los nombres de las clases coinciden,  impido mover el elemento con un booleano
-
-//para el mousedown hago la misma comprobación de las clases (capaz sea mejor separarla en una función aparte)
-// Si coinciden, meto el draggable en su contenedor, sino, disparo la animación para volver a su posición original
-
-
-
-
-
 // TODO:
 /*
--Agregar todos los 'nodos' para las piezas y acomodarlos X
--Cambiar los nombres de las clases -> los cuadraditos tienen que tener la clase 'pieceNode' y tanto el nodo como la pieza tienen que tener el número en una clase,
-la pieza va a tener un id con el número (para el clip-path) --> buscar sugerencias para nombrar las clases
-- Ajustar la función que calcula el offset para que sólo devuelva la pieza más cercana si tiene un offset de 15x15 respecto al contenedor
-(de lo contrario se desencadena la animación para volver a la posición original)
-- Si el número de la pieza coincide con el del nodo, entonces appendChild a la sección (tal vez conviene meter los nodos dentro de una sección)
-
+- Transiciones:
+      -Volver a posición original
+      - Insertarse en el rompecabezas (sonido)
+      - Pasar de rompecabezas armado a video (sonido, video + audio)
 Luego de resolver la funcionalidad del rompecabezas:
 - Reemplazar por imágenes las piezas
 - Desarrollar una función que cuente cuántos nodos están completos, si llega al total entonces se activa la animación final

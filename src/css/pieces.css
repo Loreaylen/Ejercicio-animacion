@@ -40,7 +40,6 @@
 }
 
 #one {
-  background-color: green;
   clip-path: polygon(0 0, 100% 0, 162px 162px);
 }
 
@@ -50,7 +49,6 @@
 }
 
 #two {
-  background-color: blueviolet;
   clip-path: polygon(0 0, 92px 92px, 0 100%);
 }
 

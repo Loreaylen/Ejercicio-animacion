@@ -18,6 +18,7 @@
   width: 960px;
   height: auto;
   z-index: -1;
+  display: none;
 }
 
 .imgContainer {
@@ -28,19 +29,38 @@
   top: 0;
   left:0;
 }
-#womanImg {
-  width: 960px;
-  height: auto;
-  position:absolute;
-  top:0;
-  left: 0;
-  z-index: 100;
-  display: none;
-}
 
 .secondContainer {
   width: 400px;
   height: 200px;
   border: 1px solid black;
   position: relative;
+}
+
+.inside {
+  position:relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.first {
+  background-image: url(../../media/firstSection.png);
+}
+
+.second {
+  background-image: url(../../media/secondSection.png);
+}
+
+.third {
+  background-image: url(../../media/thirdSection.png);
+}
+
+.fourth {
+  background-image: url(../../media/fouthSection.png);
+}
+
+.first, .second, .third, .fourth {
+  width: 240px;
+  height: 480px;
 }
