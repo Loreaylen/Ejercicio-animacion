@@ -1,22 +1,67 @@
-const draggables = document.querySelectorAll('.draggable'),
+const 
+  draggables = document.querySelectorAll('.draggable'),
   pieceContainer = document.querySelectorAll('.pContainer'),
   secondContainer = document.querySelector('.secondContainer'),
   piece = /(piece)/g,
   inside = /(inside)/g;
 
+
 let mousePosition = { x: null, y: null },
-   // ver si esto es util o no
+  // ver si esto es util o no
   mouseDown = false, // para que el elemento deje de cambiar de posición si se suelta el mouse
   selectedDraggable = null, // Para la función de mousemove
   diff = { x: null, y: null }, // para que el mouse pueda arrastrar al draggable al lugar correcto
   startX = 0,
   startY = 0;
 
-  
+const createDiv = (num, idNum) => {
+  const newDiv = document.createElement('div')
+  const newNode = document.createElement('div')
+  let section = '';
+
+  if (num <= 7) {
+    section = 'first'
+  }
+  if (num >= 8 && num <= 14) {
+    section = 'second'
+  }
+  if (num >= 15 && num <= 21) {
+    section = 'third'
+  }
+  if (num >= 22) {
+    section = 'fourth'
+  }
+  newDiv.id = idNum
+  newDiv.className = `draggable ${section}`
+  newNode.className = `node piece${num}`
+
+  newDiv.appendChild(newNode)
+  secondContainer.appendChild(newDiv)
+  return;
+}
+
+// Crea cada una de las piezas en el DOM aleatoriamente
+const generateRandomDivs = (ids) => {
+  const max = ids.length - 1
+
+  while (!ids.every(el => el === 'done')) {
+    const randomNum = Math.floor(Math.random() * (max - 0 + 1) + 0)
+    if (ids[randomNum] === 'done') {
+      continue
+    }
+    else {
+      createDiv(randomNum + 1, ids[randomNum])
+      ids.splice(randomNum, 1, 'done')
+    }
+  }
+}
+
 // Función para buscar la clase con el número de la pieza
 const getPieceClass = (element, regex) => {
   return Object.values(element.classList).find(el => regex.test(el)) || false
 }
+
+
 
 // el offset debería calcular la distancia entre el draggable que estoy arrastrando y la pieza más cercana
 // para calcular la cercanía debería usar la posición en la que está el draggable y ver cuál es el container más cercano
@@ -60,10 +105,10 @@ const matchClass = (draggable, child, resultclass) => {
 const resetTransition = (draggable) => {
   draggable.style.transition = 'transform 0.3s';
   draggable.style.transform = `translate(${startX}px, ${startY}px)`
-  setTimeout(() =>{
-  draggable.removeAttribute('transition')
-  draggable.removeAttribute('transform')
-  secondContainer.appendChild(draggable)
+  setTimeout(() => {
+    draggable.removeAttribute('transition')
+    draggable.removeAttribute('transform')
+    secondContainer.appendChild(draggable)
   }, 300)
 }
 window.addEventListener('mousemove', e => {
@@ -77,39 +122,51 @@ window.addEventListener('mousemove', e => {
   selectedDraggable.style.left = offsetX + 'px';
 })
 
+const mouseUpFunction = (draggable) => {
+  mouseDown = false
+  const child = draggable.children[0]
+  const match = getClosestContainer(child)
+  match ? matchClass(draggable, child, match) : resetTransition(draggable)
+  draggable.classList.remove('dragging');
+}
+
 // Lista de divs arrastrables, a cada uno le agrego una clase dragging cuando empiece a arrastrarse
 // Cuando lo suelte se eliminará la clase 
+
+
+// const ids = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven',      'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyOne', 'twentyTwo', 'twentyThree', 'twentyFour', 'twentyFive', 'twentySix', 'twentySeven', 'twentyEight']
+
+// generateRandomDivs(ids)
+const mouseDownFunction = (e, draggable) => {
+  const initial = draggable.getBoundingClientRect()
+  console.log(initial)
+  startX = e.clientX;
+  startY = e.clientY;
+  console.log(mousePosition)
+  if (!mousePosition || getPieceClass(draggable, inside)) return;
+
+  mouseDown = true;
+  selectedDraggable = draggable;  // Seleccionar el draggable
+  diff.y = mousePosition.y - draggable.offsetTop
+  diff.x = mousePosition.x - draggable.offsetLeft // Ver si esto está bien para calcular el offset del elemento
+  let offsetY = mousePosition.y - diff.y;
+  let offsetX = mousePosition.x - diff.x;
+  draggable.style.top = offsetY + 'px';
+  draggable.style.left = offsetX + 'px';
+  draggable.style.zIndex = '1000';
+  draggable.classList.add('dragging');
+}
+
 draggables.forEach((draggable) => {
 
   draggable.addEventListener('mousedown', e => {
-    const initial = draggable.getBoundingClientRect()
-    console.log(initial)
-    startX = e.clientX;
-    startY = e.clientY;
-    if (!mousePosition || getPieceClass(draggable, inside)) return;
-
-    mouseDown = true;
-    selectedDraggable = draggable;  // Seleccionar el draggable
-    diff.y = mousePosition.y - draggable.offsetTop
-    diff.x = mousePosition.x - draggable.offsetLeft // Ver si esto está bien para calcular el offset del elemento
-    let offsetY = mousePosition.y - diff.y;
-    let offsetX = mousePosition.x - diff.x;
-    draggable.style.top = offsetY + 'px';
-    draggable.style.left = offsetX + 'px';
-    draggable.style.zIndex = '1000';
-    draggable.classList.add('dragging');
+    mouseDownFunction(e, draggable)
   })
 
   draggable.addEventListener('mouseup', e => {
-    mouseDown = false
-    const child = draggable.children[0]
-    const match = getClosestContainer(child)
-    match ? matchClass(draggable, child, match) : resetTransition(draggable)
-    draggable.classList.remove('dragging');
-  });
-
+    mouseUpFunction(draggable);
 })
-
+})
 // TODO:
 /*
 - Transiciones:

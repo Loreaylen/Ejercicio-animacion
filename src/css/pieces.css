@@ -58,7 +58,6 @@
 }
 
 #three {
-  background-color: yellow;
   clip-path: polygon(100% 0, 162px 162px, 100% 50%);
 }
 
@@ -68,7 +67,6 @@
 }
 
 #four {
-  background-color: aquamarine;
   clip-path: polygon(92px 92px, 162px 162px, 0 100%);
 }
 
@@ -78,7 +76,6 @@
 }
 
 #five {
-  background-color: red;
   clip-path: polygon(162px 162px, 243px 243px, 100% 100%, 50% 100%, 50% 50%);
 }
 
@@ -88,7 +85,6 @@
 }
 
 #six {
-  background-color: blue;
   clip-path: polygon(50% 50%, 50% 100%, 82px 320px);
 }
 
@@ -98,7 +94,6 @@
 }
 
 #seven {
-  background-color: yellow;
   clip-path: polygon(82px 320px, 50% 100%, 0 100%);
 }
 
@@ -114,7 +109,6 @@
 }
 
 #eight {
-  background-color: aqua;
   clip-path: polygon(0 0, 100% 0, 100% 160px, 50% 50%);
 }
 
@@ -125,7 +119,6 @@
 
 
 #nine {
-  background-color: yellow;
   clip-path: polygon(50% 50%, 100% 160px, 100% 50%);
 }
 
@@ -135,7 +128,6 @@
 }
 
 #ten {
-  background-color: blue;
   clip-path: polygon(0 0,50% 50%, 80px 321px, 0 242px);
 }
 
@@ -145,7 +137,6 @@
 }
 
 #eleven {
-  background-color: purple;
   clip-path: polygon(0 242px, 80px 321px, 0 100%);
 }
 
@@ -155,7 +146,6 @@
 }
 
 #twelve {
-  background-color: red;
   clip-path: polygon(50% 50%, 100% 50%, 100% 100%);
 }
 
@@ -165,7 +155,6 @@
 }
 
 #thirteen {
-  background-color: lightgreen;
   clip-path: polygon(50% 50%, 80px 321px, 100% 100%);
 }
 
@@ -175,7 +164,6 @@
 }
 
 #fourteen {
-  background-color: green;
   clip-path: polygon(0 100%, 80px 321px, 100% 100%);
 }
 .piece14 {
@@ -189,7 +177,6 @@
 }
 
 #fifteen {
-  background-color: brown;
   clip-path: polygon(0 0, 80px 401px, 0 100%);
 }
 
@@ -199,7 +186,6 @@
 }
 
 #sixteen {
-  background-color: yellow;
   clip-path: polygon(0 0, 162px 320px, 80px 401px);
 }
 
@@ -209,7 +195,6 @@
 }
 
 #seventeen {
-  background-color: red;
   clip-path: polygon(0 0, 50% 0, 80px 160px);
 }
 
@@ -219,7 +204,6 @@
 }
 
 #eighteen {
-  background-color: aqua;
   clip-path: polygon(50% 0, 50% 50%, 80px 160px);
 }
 
@@ -229,7 +213,6 @@
 }
 
 #nineteen {
-  background-color: lime;
   clip-path: polygon(50% 0, 100% 0, 100% 50%, 162px 320px, 50% 50%);
 }
 
@@ -239,7 +222,6 @@
 }
 
 #twenty {
-  background-color: violet;
   clip-path: polygon(162px 320px, 100% 50%, 100% 100%);
 }
 
@@ -249,7 +231,6 @@
 }
 
 #twentyOne {
-  background-color: blue;
   clip-path: polygon(0 100%, 162px 320px, 100% 100%);
 }
 
@@ -264,7 +245,6 @@
 }
 
 #twentyTwo {
-  background-color: blue;
   clip-path: polygon(0 0, 100% 0, 81px 158px);
 }
 
@@ -274,7 +254,6 @@
 }
 
 #twentyThree {
-  background-color: orange;
   clip-path: polygon(0 0, 81px 158px, 0 50%);
 }
 
@@ -284,7 +263,6 @@
 }
 
 #twentyFour {
-  background-color: blueviolet;
   clip-path: polygon(81px 158px, 100% 0, 50% 50%);
 }
 
@@ -294,7 +272,6 @@
 }
 
 #twentyFive {
-  background-color: green;
   clip-path: polygon(0 50%, 81px 158px, 50% 50%, 0 100%);
 }
 
@@ -304,7 +281,6 @@
 }
 
 #twentySix {
-  background-color: yellow;
   clip-path: polygon(50% 50%, 100% 0, 100% 50%);
 }
 
@@ -314,7 +290,6 @@
 }
 
 #twentySeven {
-  background-color: aquamarine;
   clip-path: polygon(50% 50%, 100% 50%, 100% 320px);
 }
 
@@ -324,7 +299,6 @@
 }
 
 #twentyEight {
-  background-color: pink;
   clip-path: polygon(50% 50%, 100% 320px, 100% 100%, 0 100%);
 }
 
