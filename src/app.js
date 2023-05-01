@@ -2,7 +2,7 @@ const draggables = document.querySelectorAll('.draggable'),
   pieceContainer = document.querySelectorAll('.pContainer'),
   secondContainer = document.querySelector('.secondContainer'),
   piece = /(piece)/g,
-  nodeContainer = /(nodeContainer)/g;
+  inside = /(inside)/g;
 
 let mousePosition = { x: null, y: null },
    // ver si esto es util o no
@@ -86,8 +86,7 @@ draggables.forEach((draggable) => {
     console.log(initial)
     startX = e.clientX;
     startY = e.clientY;
-    console.log(getPieceClass(draggable.parentNode, nodeContainer), 'ACA')
-    if (!mousePosition || getPieceClass(draggable.parentNode, nodeContainer)) return;
+    if (!mousePosition || getPieceClass(draggable, inside)) return;
 
     mouseDown = true;
     selectedDraggable = draggable;  // Seleccionar el draggable
@@ -99,7 +98,6 @@ draggables.forEach((draggable) => {
     draggable.style.left = offsetX + 'px';
     draggable.style.zIndex = '1000';
     draggable.classList.add('dragging');
-    console.log(selectedDraggable, selectedDraggable.parentNode)
   })
 
   draggable.addEventListener('mouseup', e => {
