@@ -3,6 +3,7 @@ const
   pieceContainer = document.querySelectorAll('.pContainer'),
   secondContainer = document.querySelector('.secondContainer'),
   crackGlass = document.querySelector('#crackGlass'),
+  fluteSong = document.querySelector('#fluteSong'),
   womanVideo = document.querySelector('#womanVideo'),
   piece = /(piece)/g,
   inside = /(inside)/g;
@@ -14,7 +15,8 @@ let mousePosition = { x: null, y: null },
   selectedDraggable = null, // Para la función de mousemove
   diff = { x: null, y: null }, // para que el mouse pueda arrastrar al draggable al lugar correcto
   startX = 0,
-  startY = 0;
+  startY = 0,
+  startedAnimation = false;
 
 const createDiv = (num, idNum) => {
   const newDiv = document.createElement('div')
@@ -130,14 +132,18 @@ const mouseUpFunction = (draggable) => {
   const match = getClosestContainer(child)
   match ? matchClass(draggable, child, match) : resetTransition(draggable)
   draggable.classList.remove('dragging');
-  checkInsidePieces()
+  if(!startedAnimation){
+    checkInsidePieces()
+  }
+  
 }
 
 // comprobar cuántas piezas hay en su lugar
 const checkInsidePieces = () => {
 const insidePieces = [...document.querySelectorAll('.inside')]
 if(insidePieces.length === 28) {
-  initAnimation(insidePieces)
+  startedAnimation = true;
+  initAnimation(insidePieces);
 }
 else return;
 }
@@ -159,9 +165,20 @@ const initAnimation = (insidePieces) =>{
   for(let piece of pieceContainer){
     piece.classList.add('invisible')
   }
-  
   }, 3000)
+
+  setTimeout(() => {
+womanVideo.play()
+womanVideo.loop = true;
+fluteSong.play()
+songFadeOut()
+  }, 3100)
+
+  setTimeout(() => {
+    womanVideo.loop = false;
+  }, 30900)
 }
+
 // Lista de divs arrastrables, a cada uno le agrego una clase dragging cuando empiece a arrastrarse
 // Cuando lo suelte se eliminará la clase 
 
