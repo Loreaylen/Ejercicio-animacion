@@ -2,6 +2,8 @@ const
   draggables = document.querySelectorAll('.draggable'),
   pieceContainer = document.querySelectorAll('.pContainer'),
   secondContainer = document.querySelector('.secondContainer'),
+  crackGlass = document.querySelector('#crackGlass'),
+  womanVideo = document.querySelector('#womanVideo'),
   piece = /(piece)/g,
   inside = /(inside)/g;
 
@@ -128,25 +130,38 @@ const mouseUpFunction = (draggable) => {
   const match = getClosestContainer(child)
   match ? matchClass(draggable, child, match) : resetTransition(draggable)
   draggable.classList.remove('dragging');
-  console.log(checkInsidePieces())
+  checkInsidePieces()
 }
 
+// comprobar cuántas piezas hay en su lugar
 const checkInsidePieces = () => {
 const insidePieces = [...document.querySelectorAll('.inside')]
-if(insidePieces.length === 28){
+if(insidePieces.length === 28) {
+  initAnimation(insidePieces)
+}
+else return;
+}
+
+// Iniciar animación final
+// Arreglar el detalle de la animación
+const initAnimation = (insidePieces) =>{
   for(let piece of insidePieces){
     piece.classList.add('toOpacity0')
   }
+  womanVideo.classList.add('toOpacity1')
+  setTimeout(() => {
+    womanVideo.classList.remove('invisible')
+    crackGlass.currentTime = 8;
+    crackGlass.play()
+  }, 0)
+  
   setTimeout(() => {
   for(let piece of pieceContainer){
     piece.classList.add('invisible')
   }
-  }, 1000)
-  return true
+  
+  }, 3000)
 }
-else return false
-}
-
 // Lista de divs arrastrables, a cada uno le agrego una clase dragging cuando empiece a arrastrarse
 // Cuando lo suelte se eliminará la clase 
 
