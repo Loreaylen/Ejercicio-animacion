@@ -16,47 +16,30 @@ const getPieceClass = (element) => {
   return Object.values(element.classList).find(el => regex.test(el))
 }
 
- // el offset debería calcular la distancia entre el draggable que estoy arrastrando y la pieza más cercana
+// el offset debería calcular la distancia entre el draggable que estoy arrastrando y la pieza más cercana
 // para calcular la cercanía debería usar la posición en la que está el draggable y ver cuál es el container más cercano
 // y - top de la caja - height de la caja / 2
 
 const getClosestContainer = (draggable) => {
   const listOfPieceContainers = [...pieceContainer];
   const draggableRect = draggable.getBoundingClientRect();
-  
-console.log(draggableRect)
-// capaz cambiar por un map?
-const closestmap = listOfPieceContainers.map((container) => {
-  const containerRect = container.getBoundingClientRect();
+
+  const closestmap = listOfPieceContainers.map((container) => {
+    const containerRect = container.getBoundingClientRect();
     const distanceX = draggableRect.x - containerRect.x;
     const distanceY = draggableRect.y - containerRect.y;
     const distance = Math.hypot((distanceX ** 2) + (distanceY ** 2));
-    return {distance: distance, container: container}
-})
-console.log(closestmap)
+    return { distance: distance, container: container }
+  })
 
-const filtered = closestmap.filter(container => {
- return container.distance < 1900 && container.distance > 350 
-})
+  const filtered = closestmap.filter(container => {
+    if (container.distance < 1900 && container.distance > 350) {
+      return container
+    }
+    else return false
+  })
 
-console.log(filtered)
-  // const closest = listOfPieceContainers.reduce((closest, curr) => {
-  //   const containerRect = curr.getBoundingClientRect();
-  //   const distanceX = draggableRect.x - containerRect.x;
-  //   const distanceY = draggableRect.y - containerRect.y;
-  //   const distance = Math.hypot((distanceX ** 2) + (distanceY ** 2));
-  //   console.log(distance, curr)
-  //   if (closest.distance < 1900 && closest.distance > 350) { 
-  //     return {distance: distance, element: curr}
-  //   } 
-  //   return closest;
-  // }, {distance: Infinity });
-  // console.log(closest)
-  // if (closest.distance < 1900 && closest.distance > 350) {
-  //   return closest.element;
-  // } else {
-  //   return false;
-  // }
+  return filtered.length === 0 ? false : filtered[0].container
 }
 
 
@@ -78,7 +61,7 @@ draggables.forEach((draggable) => {
 
   draggable.addEventListener('mousedown', e => {
     if (!mousePosition || resetTransition) return;
-    
+
     mouseDown = true;
     selectedDraggable = draggable;  // Seleccionar el draggable
     diff.y = mousePosition.y - draggable.offsetTop
@@ -90,7 +73,7 @@ draggables.forEach((draggable) => {
     draggable.style.zIndex = '1000';
     draggable.classList.add('dragging');
     pieceNumberOfDraggable = getPieceClass(draggable)
-    
+
   })
 
   draggable.addEventListener('mouseup', e => {
