@@ -65,3 +65,17 @@
   width: 240px;
   height: 480px;
 }
+
+.invisible {
+  display:none;
+}
+
+.toOpacity0 {
+  opacity: 0;
+  transition: opacity 1s linear;
+  animation-name: crackingGlass;
+}
+
+@keyframes crackingGlass {
+  
+}

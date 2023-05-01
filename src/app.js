@@ -128,6 +128,23 @@ const mouseUpFunction = (draggable) => {
   const match = getClosestContainer(child)
   match ? matchClass(draggable, child, match) : resetTransition(draggable)
   draggable.classList.remove('dragging');
+  console.log(checkInsidePieces())
+}
+
+const checkInsidePieces = () => {
+const insidePieces = [...document.querySelectorAll('.inside')]
+if(insidePieces.length === 28){
+  for(let piece of insidePieces){
+    piece.classList.add('toOpacity0')
+  }
+  setTimeout(() => {
+  for(let piece of pieceContainer){
+    piece.classList.add('invisible')
+  }
+  }, 1000)
+  return true
+}
+else return false
 }
 
 // Lista de divs arrastrables, a cada uno le agrego una clase dragging cuando empiece a arrastrarse
@@ -139,10 +156,8 @@ const mouseUpFunction = (draggable) => {
 // generateRandomDivs(ids)
 const mouseDownFunction = (e, draggable) => {
   const initial = draggable.getBoundingClientRect()
-  console.log(initial)
   startX = e.clientX;
   startY = e.clientY;
-  console.log(mousePosition)
   if (!mousePosition || getPieceClass(draggable, inside)) return;
 
   mouseDown = true;
