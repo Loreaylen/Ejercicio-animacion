@@ -18,6 +18,12 @@ let mousePosition = { x: null, y: null },
   startY = 0,
   startedAnimation = false;
 
+
+/*
+IMPLEMENTAR  DESPUÉS
+
+// const ids = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyOne', 'twentyTwo', 'twentyThree', 'twentyFour', 'twentyFive', 'twentySix', 'twentySeven', 'twentyEight']
+
 const createDiv = (num, idNum) => {
   const newDiv = document.createElement('div')
   const newNode = document.createElement('div')
@@ -59,22 +65,19 @@ const generateRandomDivs = (ids) => {
     }
   }
 }
+*/
+
 
 // Función para buscar la clase con el número de la pieza
 const getPieceClass = (element, regex) => {
-  return Object.values(element.classList).find(el => regex.test(el)) || false
+  console.log(element)
+  return Object.values(element?.classList).find(el => regex.test(el)) || false
 }
 
-
-
-// el offset debería calcular la distancia entre el draggable que estoy arrastrando y la pieza más cercana
-// para calcular la cercanía debería usar la posición en la que está el draggable y ver cuál es el container más cercano
-// y - top de la caja - height de la caja / 2
-
-const getClosestContainer = (childOfDrag) => {
+const getClosestContainer = (drag, childOfDrag) => {
   const listOfPieceContainers = [...pieceContainer];
   const childRect = childOfDrag.getBoundingClientRect();
-
+  
   const closestmap = listOfPieceContainers.map((container) => {
     const containerRect = container.getBoundingClientRect();
     const distanceX = childRect.x - containerRect.x;
@@ -88,7 +91,7 @@ const getClosestContainer = (childOfDrag) => {
     }
     else return false
   })
-  return filtered.length === 0 ? false : filtered[0].container
+  return filtered.length === 0 ? false: filtered[0].container
 }
 
 const matchClass = (draggable, child, resultclass) => {
@@ -106,37 +109,9 @@ const matchClass = (draggable, child, resultclass) => {
     return;
   }
 }
-const resetTransition = (draggable) => {
-  draggable.style.transition = 'transform 0.3s';
-  draggable.style.transform = `translate(${startX}px, ${startY}px)`
-  setTimeout(() => {
-    draggable.removeAttribute('transition')
-    draggable.removeAttribute('transform')
-    secondContainer.appendChild(draggable)
-  }, 300)
-}
-window.addEventListener('mousemove', e => {
-  mousePosition.x = e.clientX;
-  mousePosition.y = e.clientY
-  if (!mouseDown) return; // No se va a activar si el mouseDown es false
 
-  let offsetY = mousePosition.y - diff.y;
-  let offsetX = mousePosition.x - diff.x;
-  selectedDraggable.style.top = offsetY + 'px';  // Con esto le asigno la posición en la que va a quedar el draggable cuando lo suelte
-  selectedDraggable.style.left = offsetX + 'px';
-})
 
-const mouseUpFunction = (draggable) => {
-  mouseDown = false
-  const child = draggable.children[0]
-  const match = getClosestContainer(child)
-  match ? matchClass(draggable, child, match) : resetTransition(draggable)
-  draggable.classList.remove('dragging');
-  if(!startedAnimation){
-    checkInsidePieces()
-  }
-  
-}
+
 
 // comprobar cuántas piezas hay en su lugar
 const checkInsidePieces = () => {
@@ -171,7 +146,6 @@ const initAnimation = (insidePieces) =>{
 womanVideo.play()
 womanVideo.loop = true;
 fluteSong.play()
-songFadeOut()
   }, 3100)
 
   setTimeout(() => {
@@ -179,15 +153,32 @@ songFadeOut()
   }, 30900)
 }
 
-// Lista de divs arrastrables, a cada uno le agrego una clase dragging cuando empiece a arrastrarse
-// Cuando lo suelte se eliminará la clase 
+const resetTransition = (draggable) => {
+  console.log(startX, startY)
+  draggable.style.top = startX
+  draggable.style.left = startY
+  secondContainer.appendChild(draggable)
+}
 
 
-// const ids = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven',      'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyOne', 'twentyTwo', 'twentyThree', 'twentyFour', 'twentyFive', 'twentySix', 'twentySeven', 'twentyEight']
+const mouseUpFunction = (draggable) => {
+mouseDown = false
+const child = draggable.children[0]
+const match = getClosestContainer(draggable, child)
+if(match){
+  matchClass(draggable, child, match)
+}
+else {
+  draggable.style.opacity = '0.3';
+}
 
-// generateRandomDivs(ids)
+draggable.classList.remove('dragging');
+if(!startedAnimation){
+  checkInsidePieces()
+}
+}
+
 const mouseDownFunction = (e, draggable) => {
-  const initial = draggable.getBoundingClientRect()
   startX = e.clientX;
   startY = e.clientY;
   if (!mousePosition || getPieceClass(draggable, inside)) return;
@@ -202,7 +193,19 @@ const mouseDownFunction = (e, draggable) => {
   draggable.style.left = offsetX + 'px';
   draggable.style.zIndex = '1000';
   draggable.classList.add('dragging');
+  draggable.style.opacity = '1'
 }
+
+window.addEventListener('mousemove', e => {
+  mousePosition.x = e.clientX;
+  mousePosition.y = e.clientY
+  if (!mouseDown) return; // No se va a activar si el mouseDown es false
+
+  let offsetY = mousePosition.y - diff.y;
+  let offsetX = mousePosition.x - diff.x;
+  selectedDraggable.style.top = offsetY + 'px';  // Con esto le asigno la posición en la que va a quedar el draggable cuando lo suelte
+  selectedDraggable.style.left = offsetX + 'px';
+})
 
 draggables.forEach((draggable) => {
 
@@ -214,13 +217,11 @@ draggables.forEach((draggable) => {
     mouseUpFunction(draggable);
 })
 })
-// TODO:
-/*
-- Transiciones:
-      -Volver a posición original
-      - Insertarse en el rompecabezas (sonido)
-      - Pasar de rompecabezas armado a video (sonido, video + audio)
-Luego de resolver la funcionalidad del rompecabezas:
-- Reemplazar por imágenes las piezas
-- Desarrollar una función que cuente cuántos nodos están completos, si llega al total entonces se activa la animación final
- */
+
+
+/*TODO
+- Hacer que si suelto la pieza se vuelva a su lugar
+- Poner un sonido para el click
+- Poner sonido al insertar correctamente una pieza
+- Poner otro sonido cuando la pieza sea incorrecta
+*/

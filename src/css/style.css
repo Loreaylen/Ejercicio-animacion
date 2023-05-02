@@ -29,10 +29,9 @@
 }
 
 .secondContainer {
-  width: 900px;
-  height: 900px;
+  width: 90%;
+  height: 300px;
   margin: auto;
-  border: 1px solid black;
   position: relative;
 }
 
