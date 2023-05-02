@@ -3,6 +3,8 @@ const
   pieceContainer = document.querySelectorAll('.pContainer'),
   secondContainer = document.querySelector('.secondContainer'),
   crackGlass = document.querySelector('#crackGlass'),
+  tappingGlass = document.querySelector('#tappingGlass'),
+  chimes = document.querySelector('#chimes'),
   fluteSong = document.querySelector('#fluteSong'),
   womanVideo = document.querySelector('#womanVideo'),
   piece = /(piece)/g,
@@ -103,15 +105,15 @@ const matchClass = (draggable, child, resultclass) => {
     draggable.classList.remove('draggable')
     draggable.removeAttribute('style')
     draggable.classList.add('inside')
-    // triggerear transición
+    setTimeout(() => {
+      chimes.play()
+    }, 0)
+    
   }
   else {
     return;
   }
 }
-
-
-
 
 // comprobar cuántas piezas hay en su lugar
 const checkInsidePieces = () => {
@@ -153,14 +155,6 @@ fluteSong.play()
   }, 30900)
 }
 
-const resetTransition = (draggable) => {
-  console.log(startX, startY)
-  draggable.style.top = startX
-  draggable.style.left = startY
-  secondContainer.appendChild(draggable)
-}
-
-
 const mouseUpFunction = (draggable) => {
 mouseDown = false
 const child = draggable.children[0]
@@ -170,6 +164,9 @@ if(match){
 }
 else {
   draggable.style.opacity = '0.3';
+  setTimeout(() => {
+    tappingGlass.play()
+  }, 0)
 }
 
 draggable.classList.remove('dragging');
