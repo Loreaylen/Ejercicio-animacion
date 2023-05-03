@@ -72,7 +72,6 @@ const generateRandomDivs = (ids) => {
 
 // Función para buscar la clase con el número de la pieza
 const getPieceClass = (element, regex) => {
-  console.log(element)
   return Object.values(element?.classList).find(el => regex.test(el)) || false
 }
 
@@ -111,7 +110,10 @@ const matchClass = (draggable, child, resultclass) => {
     
   }
   else {
-    return;
+    draggable.style.opacity = '0.3';
+  setTimeout(() => {
+    tappingGlass.play()
+  }, 0)
   }
 }
 
