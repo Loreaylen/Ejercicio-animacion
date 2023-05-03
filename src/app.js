@@ -21,55 +21,6 @@ let mousePosition = { x: null, y: null },
   startedAnimation = false;
 
 
-/*
-IMPLEMENTAR  DESPUÉS
-
-// const ids = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyOne', 'twentyTwo', 'twentyThree', 'twentyFour', 'twentyFive', 'twentySix', 'twentySeven', 'twentyEight']
-
-const createDiv = (num, idNum) => {
-  const newDiv = document.createElement('div')
-  const newNode = document.createElement('div')
-  let section = '';
-
-  if (num <= 7) {
-    section = 'first'
-  }
-  if (num >= 8 && num <= 14) {
-    section = 'second'
-  }
-  if (num >= 15 && num <= 21) {
-    section = 'third'
-  }
-  if (num >= 22) {
-    section = 'fourth'
-  }
-  newDiv.id = idNum
-  newDiv.className = `draggable ${section}`
-  newNode.className = `node piece${num}`
-
-  newDiv.appendChild(newNode)
-  secondContainer.appendChild(newDiv)
-  return;
-}
-
-// Crea cada una de las piezas en el DOM aleatoriamente
-const generateRandomDivs = (ids) => {
-  const max = ids.length - 1
-
-  while (!ids.every(el => el === 'done')) {
-    const randomNum = Math.floor(Math.random() * (max - 0 + 1) + 0)
-    if (ids[randomNum] === 'done') {
-      continue
-    }
-    else {
-      createDiv(randomNum + 1, ids[randomNum])
-      ids.splice(randomNum, 1, 'done')
-    }
-  }
-}
-*/
-
-
 // Función para buscar la clase con el número de la pieza
 const getPieceClass = (element, regex) => {
   return Object.values(element?.classList).find(el => regex.test(el)) || false
@@ -212,10 +163,50 @@ draggables.forEach((draggable) => {
 })
 })
 
+/*
+IMPLEMENTAR  DESPUÉS
 
-/*TODO
-- Hacer que si suelto la pieza se vuelva a su lugar
-- Poner un sonido para el click
-- Poner sonido al insertar correctamente una pieza
-- Poner otro sonido cuando la pieza sea incorrecta
+// const ids = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyOne', 'twentyTwo', 'twentyThree', 'twentyFour', 'twentyFive', 'twentySix', 'twentySeven', 'twentyEight']
+
+const createDiv = (num, idNum) => {
+  const newDiv = document.createElement('div')
+  const newNode = document.createElement('div')
+  let section = '';
+
+  if (num <= 7) {
+    section = 'first'
+  }
+  if (num >= 8 && num <= 14) {
+    section = 'second'
+  }
+  if (num >= 15 && num <= 21) {
+    section = 'third'
+  }
+  if (num >= 22) {
+    section = 'fourth'
+  }
+  newDiv.id = idNum
+  newDiv.className = `draggable ${section}`
+  newNode.className = `node piece${num}`
+
+  newDiv.appendChild(newNode)
+  secondContainer.appendChild(newDiv)
+  return;
+}
+
+// Crea cada una de las piezas en el DOM aleatoriamente
+const generateRandomDivs = (ids) => {
+  const max = ids.length - 1
+
+  while (!ids.every(el => el === 'done')) {
+    const randomNum = Math.floor(Math.random() * (max - 0 + 1) + 0)
+    if (ids[randomNum] === 'done') {
+      continue
+    }
+    else {
+      createDiv(randomNum + 1, ids[randomNum])
+      ids.splice(randomNum, 1, 'done')
+    }
+  }
+}
 */
