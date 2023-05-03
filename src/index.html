@@ -1,166 +1,271 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/pieces.css" />
+    <title>Ejercicio de animación</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/pieces.css">
-  <title>Ejercicio de animación</title>
-</head>
+  <body>
+    <main>
+      <div class="container">
+        <video id="womanVideo" class="invisible">
+          <source src="../media/mujer-142566.mp4" type="video/mp4" />
+        </video>
 
-<body>
-  <main>
-    <div class="container">
-      <video id="womanVideo" class="invisible">
-        <source src="../media/mujer-142566.mp4" type="video/mp4">
-      </video>
+        <div class="imgContainer">
+          <div class="nodeContainer firstSection">
+            <div class="node pContainer piece1"></div>
+            <div class="node pContainer piece2"></div>
+            <div class="node pContainer piece3"></div>
+            <div class="node pContainer piece4"></div>
+            <div class="node pContainer piece5"></div>
+            <div class="node pContainer piece6"></div>
+            <div class="node pContainer piece7"></div>
+          </div>
 
-      <div class="imgContainer">
-        <div class="nodeContainer firstSection">
-          <div class="node pContainer piece1"></div>
-          <div class="node pContainer piece2"></div>
-          <div class="node pContainer piece3"></div>
-          <div class="node pContainer piece4"></div>
-          <div class="node pContainer piece5"></div>
-          <div class="node pContainer piece6"></div>
-          <div class="node pContainer piece7"></div>
+          <div class="nodeContainer secondSection">
+            <div class="node pContainer piece8"></div>
+            <div class="node pContainer piece9"></div>
+            <div class="node pContainer piece10"></div>
+            <div class="node pContainer piece11"></div>
+            <div class="node pContainer piece12"></div>
+            <div class="node pContainer piece13"></div>
+            <div class="node pContainer piece14"></div>
+          </div>
+
+          <div class="nodeContainer thirdSection">
+            <div class="node pContainer piece15"></div>
+            <div class="node pContainer piece16"></div>
+            <div class="node pContainer piece17"></div>
+            <div class="node pContainer piece18"></div>
+            <div class="node pContainer piece19"></div>
+            <div class="node pContainer piece20"></div>
+            <div class="node pContainer piece21"></div>
+          </div>
+
+          <div class="nodeContainer fourthSection">
+            <div class="node pContainer piece22"></div>
+            <div class="node pContainer piece23"></div>
+            <div class="node pContainer piece24"></div>
+            <div class="node pContainer piece25"></div>
+            <div class="node pContainer piece26"></div>
+            <div class="node pContainer piece27"></div>
+            <div class="node pContainer piece28"></div>
+          </div>
         </div>
-
-        <div class="nodeContainer secondSection">
-          <div class="node pContainer piece8"></div>
-          <div class="node pContainer piece9"></div>
-          <div class="node pContainer piece10"></div>
-          <div class="node pContainer piece11"></div>
-          <div class="node pContainer piece12"></div>
-          <div class="node pContainer piece13"></div>
-          <div class="node pContainer piece14"></div>
+      </div>
+      <div class="secondContainer">
+        <div
+          id="one"
+          class="draggable first"
+          style="top: -26px; left: 73px; z-index: 1000"
+        >
+          <div class="node piece1"></div>
         </div>
-
-        <div class="nodeContainer thirdSection">
-          <div class="node pContainer piece15"></div>
-          <div class="node pContainer piece16"></div>
-          <div class="node pContainer piece17"></div>
-          <div class="node pContainer piece18"></div>
-          <div class="node pContainer piece19"></div>
-          <div class="node pContainer piece20"></div>
-          <div class="node pContainer piece21"></div>
+        <div
+          id="two"
+          class="draggable first"
+          style="top: 181px; left: 1089px; z-index: 1000"
+        >
+          <div class="node piece2"></div>
         </div>
-
-        <div class="nodeContainer fourthSection">
-          <div class="node pContainer piece22"></div>
-          <div class="node pContainer piece23"></div>
-          <div class="node pContainer piece24"></div>
-          <div class="node pContainer piece25"></div>
-          <div class="node pContainer piece26"></div>
-          <div class="node pContainer piece27"></div>
-          <div class="node pContainer piece28"></div>
-          
+        <div id="three" class="draggable first">
+          <div class="node piece3"></div>
+        </div>
+        <div
+          id="four"
+          class="draggable first"
+          style="top: -76px; left: 148px; z-index: 1000"
+        >
+          <div class="node piece4"></div>
+        </div>
+        <div
+          id="five"
+          class="draggable first"
+          style="top: -192px; left: 615px; z-index: 1000"
+        >
+          <div class="node piece5"></div>
+        </div>
+        <div
+          id="six"
+          class="draggable first"
+          style="top: -268px; left: 335px; z-index: 1000"
+        >
+          <div class="node piece6"></div>
+        </div>
+        <div
+          id="seven"
+          class="draggable first"
+          style="top: -170px; left: 66px; z-index: 1000"
+        >
+          <div class="node piece7"></div>
+        </div>
+        <div
+          id="twentyTwo"
+          class="draggable fourth"
+          style="top: 2px; left: 719px; z-index: 1000"
+        >
+          <div class="node piece22"></div>
+        </div>
+        <div
+          id="twentyThree"
+          class="draggable fourth"
+          style="top: -19px; left: 334px; z-index: 1000"
+        >
+          <div class="node piece23"></div>
+        </div>
+        <div
+          id="twentyFour"
+          class="draggable fourth"
+          style="top: 39px; left: 728px; z-index: 1000"
+        >
+          <div class="node piece24"></div>
+        </div>
+        <div
+          id="twentyFive"
+          class="draggable fourth"
+          style="top: -29px; left: -13px; z-index: 1000"
+        >
+          <div class="node piece25"></div>
+        </div>
+        <div
+          id="twentySix"
+          class="draggable fourth"
+          style="top: -15px; left: 225px; z-index: 1000"
+        >
+          <div class="node piece26"></div>
+        </div>
+        <div
+          id="twentySeven"
+          class="draggable fourth"
+          style="top: -210px; left: 160px; z-index: 1000"
+        >
+          <div class="node piece27"></div>
+        </div>
+        <div
+          id="twentyEight"
+          class="draggable fourth"
+          style="top: -211px; left: 161px; z-index: 1000"
+        >
+          <div class="node piece28"></div>
+        </div>
+        <div
+          id="fifteen"
+          class="draggable third"
+          style="top: -45px; left: 310px; z-index: 1000"
+        >
+          <div class="node piece15"></div>
+        </div>
+        <div
+          id="sixteen"
+          class="draggable third"
+          style="top: 47px; left: 703px; z-index: 1000"
+        >
+          <div class="node piece16"></div>
+        </div>
+        <div
+          id="seventeen"
+          class="draggable third"
+          style="top: 49px; left: 166px; z-index: 1000"
+        >
+          <div class="node piece17"></div>
+        </div>
+        <div
+          id="eighteen"
+          class="draggable third"
+          style="top: -23px; left: 549px; z-index: 1000"
+        >
+          <div class="node piece18"></div>
+        </div>
+        <div
+          id="nineteen"
+          class="draggable third"
+          style="top: -28px; left: 836px; z-index: 1000"
+        >
+          <div class="node piece19"></div>
+        </div>
+        <div
+          id="twenty"
+          class="draggable third"
+          style="top: -129px; left: 461px; z-index: 1000"
+        >
+          <div class="node piece20"></div>
+        </div>
+        <div
+          id="twentyOne"
+          class="draggable third"
+          style="top: -169px; left: 375px; z-index: 1000"
+        >
+          <div class="node piece21"></div>
+        </div>
+        <div
+          id="eight"
+          class="draggable second"
+          style="top: 123px; left: 198px; z-index: 1000"
+        >
+          <div class="node piece8"></div>
+        </div>
+        <div
+          id="nine"
+          class="draggable second"
+          style="top: 22px; left: 919px; z-index: 1000"
+        >
+          <div class="node piece9"></div>
+        </div>
+        <div
+          id="ten"
+          class="draggable second"
+          style="top: -41px; left: 516px; z-index: 1000"
+        >
+          <div class="node piece10"></div>
+        </div>
+        <div
+          id="eleven"
+          class="draggable second"
+          style="top: -122px; left: 1179px; z-index: 1000"
+        >
+          <div class="node piece11"></div>
+        </div>
+        <div
+          id="twelve"
+          class="draggable second"
+          style="top: -56px; left: 738px; z-index: 1000"
+        >
+          <div class="node piece12"></div>
+        </div>
+        <div
+          id="thirteen"
+          class="draggable second"
+          style="top: -243px; left: 627px; z-index: 1000"
+        >
+          <div class="node piece13"></div>
+        </div>
+        <div
+          id="fourteen"
+          class="draggable second"
+          style="top: -345px; left: 1068px; z-index: 1000"
+        >
+          <div class="node piece14"></div>
         </div>
       </div>
-    </div>
-    <div class="secondContainer">
-      <div id="one" class="draggable first" style="top: -26px; left: 73px; z-index: 1000;">
-        <div class="node piece1"></div>
-      </div>
-      <div id="two" class="draggable first" style="top: 181px; left: 1089px; z-index: 1000;">
-        <div class="node piece2"></div>
-      </div>
-      <div id="three" class="draggable first">
-        <div class="node piece3"></div>
-      </div>
-      <div id="four" class="draggable first" style="top: -76px; left: 148px; z-index: 1000;">
-        <div class="node piece4"></div>
-      </div>
-      <div id="five" class="draggable first" style="top: -192px; left: 615px; z-index: 1000;">
-        <div class="node piece5"></div>
-      </div>
-      <div id="six" class="draggable first" style="top: -268px; left: 335px; z-index: 1000;">
-        <div class="node piece6"></div>
-      </div>
-      <div id="seven" class="draggable first" style="top: -170px; left: 66px; z-index: 1000;">
-        <div class="node piece7"></div>
-      </div>
-      <div id="twentyTwo" class="draggable fourth" style="top: 2px; left: 719px; z-index: 1000;">
-        <div class="node piece22"></div>
-      </div>
-      <div id="twentyThree" class="draggable fourth" style="top: -19px; left: 334px; z-index: 1000;">
-        <div class="node piece23"></div>
-      </div>
-      <div id="twentyFour" class="draggable fourth" style="top: 39px; left: 728px; z-index: 1000;">
-        <div class="node piece24"></div>
-      </div>
-      <div id="twentyFive" class="draggable fourth" style="top: -29px; left: -13px; z-index: 1000;">
-        <div class="node piece25"></div>
-      </div>
-      <div id="twentySix" class="draggable fourth" style="top: -15px; left: 225px; z-index: 1000;">
-        <div class="node piece26"></div>
-      </div>
-      <div id="twentySeven" class="draggable fourth" style="top: -210px; left: 160px; z-index: 1000;">
-        <div class="node piece27"></div>
-      </div>
-      <div id="twentyEight" class="draggable fourth" style="top: -211px; left: 161px; z-index: 1000;">
-        <div class="node piece28"></div>
-    </div>
-    <div id="fifteen" class="draggable third" style="top: -45px; left: 310px; z-index: 1000;">
-      <div class="node piece15"></div>
-    </div>
-    <div id="sixteen" class="draggable third" style="top: 47px; left: 703px; z-index: 1000;">
-      <div class="node piece16"></div>
-    </div>
-    <div id="seventeen" class="draggable third" style="top: 49px; left: 166px; z-index: 1000;">
-      <div class="node piece17"></div>
-    </div>
-    <div id="eighteen" class="draggable third" style="top: -23px; left: 549px; z-index: 1000;">
-      <div class="node piece18"></div>
-    </div>
-    <div id="nineteen" class="draggable third" style="top: -28px; left: 836px; z-index: 1000;">
-      <div class="node piece19"></div>
-    </div>
-    <div id="twenty" class="draggable third" style="top: -129px; left: 461px; z-index: 1000;">
-      <div class="node piece20"></div>
-    </div>
-    <div id="twentyOne" class="draggable third" style="top: -169px; left: 375px; z-index: 1000;">
-      <div class="node piece21"></div>
-    </div>
-    <div id="eight" class="draggable second" style="top: 123px; left: 198px; z-index: 1000;">
-      <div class="node piece8"></div>
-    </div>
-    <div id="nine" class="draggable second" style="top: 22px; left: 919px; z-index: 1000;">
-      <div class="node piece9"></div>
-    </div>
-    <div id="ten" class="draggable second" style="top: -41px; left: 516px; z-index: 1000;">
-      <div class="node piece10"></div>
-    </div>
-    <div id="eleven" class="draggable second" style="top: -122px; left: 1179px; z-index: 1000;">
-      <div class="node piece11"></div>
-    </div>
-    <div id="twelve" class="draggable second" style="top: -56px; left: 738px; z-index: 1000;">
-      <div class="node piece12"></div>
-    </div>
-    <div id="thirteen" class="draggable second" style="top: -243px; left: 627px; z-index: 1000;">
-      <div class="node piece13"></div>
-    </div>
-    <div id="fourteen" class="draggable second" style="top: -345px; left: 1068px; z-index: 1000;">
-      <div class="node piece14"></div>
-    </div>
-    </div>
 
-    <audio id="crackGlass">
-      <source src="../media/ice-break-14765.mp3" type="audio/mp3">
-    </audio>
-    <audio id="chimes">
-      <source src="../media/chimes.mp3" type="audio/mp3">
-    </audio>
-    <audio id="tappingGlass">
-      <source src="../media/tappingGlass.mp3" type="audio/mp3">
-    </audio>
-    <audio id="fluteSong">
-      <source src="../media/chinese-flute-cut.mp3" type="audio/mp3">
-    </audio>
-  </main>
-  <script src="app.js"></script>
-</body>
-
+      <audio id="crackGlass">
+        <source src="../media/ice-break-14765.mp3" type="audio/mp3" />
+      </audio>
+      <audio id="chimes">
+        <source src="../media/chimes.mp3" type="audio/mp3" />
+      </audio>
+      <audio id="tappingGlass">
+        <source src="../media/tappingGlass.mp3" type="audio/mp3" />
+      </audio>
+      <audio id="fluteSong">
+        <source src="../media/chinese-flute-cut.mp3" type="audio/mp3" />
+      </audio>
+    </main>
+    <script src="app.js"></script>
+  </body>
 </html>
