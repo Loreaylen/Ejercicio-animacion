@@ -5,19 +5,6 @@
   --fourth-Section: 720px;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.demopContainer {
-  width: 240px;
-  height: 480px;
-  position:absolute;
-  opacity: 0.5;
-  top: 0;
-}
 
 .nodeContainer {
   width: 240px;
@@ -31,6 +18,10 @@
   height: 30px;
   border: 2px dashed black;
   position: absolute;
+}
+
+.draggable {
+  position:absolute;
 }
 
 /*--------------FIRST SECTION (1/4)-----------*/

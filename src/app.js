@@ -110,13 +110,10 @@ const matchClass = (draggable, child, resultclass) => {
     
   }
   else {
-    draggable.style.opacity = '0.3';
-  setTimeout(() => {
     tappingGlass.play()
-  }, 0)
+    draggable.style.opacity = '0.3';
   }
 }
-
 // comprobar cuántas piezas hay en su lugar
 const checkInsidePieces = () => {
 const insidePieces = [...document.querySelectorAll('.inside')]
@@ -166,9 +163,7 @@ if(match){
 }
 else {
   draggable.style.opacity = '0.3';
-  setTimeout(() => {
-    tappingGlass.play()
-  }, 0)
+  tappingGlass.play()
 }
 
 draggable.classList.remove('dragging');
