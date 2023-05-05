@@ -124,7 +124,7 @@ const mouseDownFunction = (e, draggable) => {
   mouseDown = true;
   selectedDraggable = draggable; // Seleccionar el draggable
   diff.y = mousePosition.y - draggable.offsetTop;
-  diff.x = mousePosition.x - draggable.offsetLeft; // Ver si esto está bien para calcular el offset del elemento
+  diff.x = mousePosition.x - draggable.offsetLeft; 
   let offsetY = mousePosition.y - diff.y;
   let offsetX = mousePosition.x - diff.x;
   draggable.style.top = offsetY + "px";
