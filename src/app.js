@@ -1,6 +1,4 @@
-const draggables = document.querySelectorAll('.draggable'),
-    pieceContainer = document.querySelectorAll('.pContainer'),
-    secondContainer = document.querySelector('.secondContainer'),
+const secondContainer = document.querySelector('.secondContainer'),
     tappingGlass = document.querySelector('#tappingGlass'),
     chimes = document.querySelector('#chimes'),
     piece = /(piece)/g,
@@ -23,25 +21,32 @@ const getPieceClass = (element, regex) => {
     );
 };
 
-const getClosestContainer = (drag, childOfDrag) => {
-    const listOfPieceContainers = [...pieceContainer];
-    const childRect = childOfDrag.getBoundingClientRect();
+// Aylen
+const getClosestContainer = (childOfDrag) => {
+  const listOfPieceContainers = [...$('.pContainer')];
+  // const childRect = childOfDrag.getBoundingClientRect();
+  // ---- Testeando offset para reemplazar getBoundingClientRect, devuelve error si el objeto no fue seleccionado con jquery, devuelve undefined
+   const childOffset = childOfDrag.offset()
+  
+  // console.log('childRect x', childRect.x, 'childRect y', childRect.y)
+  const closestmap = listOfPieceContainers.map((container) => {
+    const containerRect = $(container).offset()
+    const distanceX = childOffset.left - containerRect.left;
+    const distanceY = childOffset.top - containerRect.top;
+    const distance = Math.hypot(distanceX ** 2 + distanceY ** 2);
+    return { distance: distance, container: $(container) };
+  });
 
-    const closestmap = listOfPieceContainers.map((container) => {
-        const containerRect = container.getBoundingClientRect();
-        const distanceX = childRect.x - containerRect.x;
-        const distanceY = childRect.y - containerRect.y;
-        const distance = Math.hypot(distanceX ** 2 + distanceY ** 2);
-        return { distance: distance, container: container };
-    });
-    const filtered = closestmap.filter((container) => {
-        if (container.distance <= 450) {
-            return container;
-        } else return false;
-    });
-    return filtered.length === 0 ? false : filtered[0].container;
+  const filtered = closestmap.filter((container) => {
+    if (container.distance <= 450) {
+      return container;
+    } else return false;
+  });
+  return filtered.length === 0 ? false : filtered[0].container;
+
 };
 
+// Aylen
 const matchClass = (draggable, child, resultclass) => {
     const pieceNumber = getPieceClass(child, piece);
     const matchTo = getPieceClass(resultclass, piece);
@@ -103,16 +108,16 @@ const initAnimation = (insidePieces) => {
 };
 
 const mouseUpFunction = (draggable) => {
-    mouseDown = false;
-    const child = draggable.children[0];
-    const match = getClosestContainer(draggable, child);
-    if (match) {
-        matchClass(draggable, child, match);
-    } else {
-        draggable.style.opacity = '0.3';
-        tappingGlass.play();
-    }
 
+  mouseDown = false;
+  const child = $(draggable).children();
+  const match = getClosestContainer(child);
+  if (match) {
+    // matchClass($(draggable), child, match);
+  } else {
+    draggable.style.opacity = "0.3";
+    tappingGlass.play();
+  }
     draggable.classList.remove('dragging');
     if (!startedAnimation) {
         checkInsidePieces();
@@ -120,42 +125,49 @@ const mouseUpFunction = (draggable) => {
 };
 
 const mouseDownFunction = (e, draggable) => {
-    startX = e.clientX;
-    startY = e.clientY;
-    if (!mousePosition || getPieceClass(draggable, inside)) return;
 
-    mouseDown = true;
-    selectedDraggable = draggable; // Seleccionar el draggable
-    diff.y = mousePosition.y - draggable.offsetTop;
-    diff.x = mousePosition.x - draggable.offsetLeft;
-    let offsetY = mousePosition.y - diff.y;
-    let offsetX = mousePosition.x - diff.x;
-    draggable.style.top = offsetY + 'px';
-    draggable.style.left = offsetX + 'px';
-    draggable.style.zIndex = '1000';
-    draggable.classList.add('dragging');
-    draggable.style.opacity = '1';
+  startX = e.clientX;
+  startY = e.clientY;
+  if (!mousePosition || getPieceClass(draggable, inside)) return;
+
+  mouseDown = true;
+  selectedDraggable = draggable; // Seleccionar el draggable
+  diff.y = mousePosition.y - draggable.offsetTop; // Calcula la diferencia entre la posición del mouse y la posición del draggable para que quede debajo del mouse
+  diff.x = mousePosition.x - draggable.offsetLeft; 
+  
+  $(draggable).css({
+    zIndex: "1000",
+    opacity: '1'
+  })
+  .addClass('dragging')
 };
 
-window.addEventListener('mousemove', (e) => {
-    mousePosition.x = e.clientX;
-    mousePosition.y = e.clientY;
-    if (!mouseDown) return; // No se va a activar si el mouseDown es false
+// Aylen
+window.addEventListener("mousemove", (e) => {
+  mousePosition.x = e.clientX;
+  mousePosition.y = e.clientY;
+  if (!mouseDown) return; // No se va a activar si el mouseDown es false
 
-    let offsetY = mousePosition.y - diff.y;
-    let offsetX = mousePosition.x - diff.x;
-    selectedDraggable.style.top = offsetY + 'px'; // Con esto le asigno la posición en la que va a quedar el draggable cuando lo suelte
-    selectedDraggable.style.left = offsetX + 'px';
+  let offsetY = mousePosition.y - diff.y; // Calcula la posición en la que va a quedar el draggable
+  let offsetX = mousePosition.x - diff.x;
+
+  $(selectedDraggable).css({
+    top: `${offsetY}px`,
+    left: `${offsetX}px`
+  }) // Asigno la posición en la que va a quedar el draggable cuando lo suelte
+  
 });
 
-draggables.forEach((draggable) => {
-    draggable.addEventListener('mousedown', (e) => {
-        mouseDownFunction(e, draggable);
-    });
+$('.draggable').each( function(i, el){
+  
+  $(el).on("mousedown", (e) => {
+    mouseDownFunction(e, el);
+  });
 
-    draggable.addEventListener('mouseup', (e) => {
-        mouseUpFunction(draggable);
-    });
+  $(el).on("mouseup", (e) => {
+    mouseUpFunction(el);
+  });
+
 });
 
 /*
@@ -204,4 +216,11 @@ const generateRandomDivs = (ids) => {
     }
   }
 }
+*/
+
+/*
+BUGS
+- Hacer scroll mientras arrastro una pieza hace que se corra el mouse de encima de la pieza y no te deje soltarla
+- Bug en el comienzo de la animación, la última pieza desaparece y vuelve a aparecer cuando comienza
+
 */
