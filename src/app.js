@@ -1,26 +1,26 @@
-const secondContainer = document.querySelector(".secondContainer"),
-  crackGlass = document.querySelector("#crackGlass"),
-  tappingGlass = document.querySelector("#tappingGlass"),
-  chimes = document.querySelector("#chimes"),
-  fluteSong = document.querySelector("#fluteSong"),
-  womanVideo = document.querySelector("#womanVideo"),
-  piece = /(piece)/g,
-  inside = /(inside)/g;
+const secondContainer = document.querySelector('.secondContainer'),
+    tappingGlass = document.querySelector('#tappingGlass'),
+    chimes = document.querySelector('#chimes'),
+    piece = /(piece)/g,
+    inside = /(inside)/g;
 
 let mousePosition = { x: null, y: null },
-  mouseDown = false, // para que el elemento deje de cambiar de posición si se suelta el mouse
-  selectedDraggable = null, // Para la función de mousemove
-  diff = { x: null, y: null }, // para que el mouse pueda arrastrar al draggable al lugar correcto
-  startX = 0,
-  startY = 0,
-  startedAnimation = false;
+    mouseDown = false, // para que el elemento deje de cambiar de posición si se suelta el mouse
+    selectedDraggable = null, // Para la función de mousemove
+    diff = { x: null, y: null }, // para que el mouse pueda arrastrar al draggable al lugar correcto
+    startX = 0,
+    startY = 0,
+    startedAnimation = false;
 
 // Función para buscar la clase con el número de la pieza
+
+// YO
 const getPieceClass = (element, regex) => {
-  return (
-    Object.values(element?.classList).find((el) => regex.test(el)) || false
-  );
+    return (
+        Object.values(element?.classList).find((el) => regex.test(el)) || false
+    );
 };
+
 // Aylen
 const getClosestContainer = (childOfDrag) => {
   const listOfPieceContainers = [...$('.pContainer')];
@@ -43,66 +43,72 @@ const getClosestContainer = (childOfDrag) => {
     } else return false;
   });
   return filtered.length === 0 ? false : filtered[0].container;
+
 };
 
 // Aylen
 const matchClass = (draggable, child, resultclass) => {
-  const pieceNumber = getPieceClass(child, piece);
-  const matchTo = getPieceClass(resultclass, piece);
-  const parentNode = resultclass.parentNode; // El contenedor padre del nodo para encajar la pieza (rectángulos)
-  if (pieceNumber === matchTo) {
-    parentNode.appendChild(draggable);
-    draggable.classList.remove("draggable");
-    draggable.removeAttribute("style");
-    draggable.classList.add("inside");
-    setTimeout(() => {
-      chimes.play();
-    }, 0);
-  } else {
-    tappingGlass.play();
-    draggable.style.opacity = "0.3";
-  }
+    const pieceNumber = getPieceClass(child, piece);
+    const matchTo = getPieceClass(resultclass, piece);
+    const parentNode = resultclass.parentNode; // El contenedor padre del nodo para encajar la pieza (rectángulos)
+    if (pieceNumber === matchTo) {
+        parentNode.appendChild(draggable);
+        draggable.classList.remove('draggable');
+        draggable.removeAttribute('style');
+        draggable.classList.add('inside');
+        setTimeout(() => {
+            chimes.play();
+        }, 0);
+    } else {
+        tappingGlass.play();
+        draggable.style.opacity = '0.3';
+    }
 };
 // comprobar cuántas piezas hay en su lugar
+
+// YO
 const checkInsidePieces = () => {
-  const insidePieces = [...document.querySelectorAll(".inside")];
-  if (insidePieces.length === 28) {
-    startedAnimation = true;
-    initAnimation(insidePieces);
-  } else return;
+    const insidePieces = [...$('.inside')];
+    if (insidePieces.length === 28) {
+        startedAnimation = true;
+        initAnimation(insidePieces);
+    } else return;
 };
 
 // Iniciar animación final
 // Arreglar el detalle de la animación
+
+// YO
 const initAnimation = (insidePieces) => {
-  for (let piece of insidePieces) {
-    piece.classList.add("toOpacity0");
-  }
-  womanVideo.classList.add("toOpacity1");
-  setTimeout(() => {
-    womanVideo.classList.remove("invisible");
-    crackGlass.currentTime = 8;
-    crackGlass.play();
-  }, 0);
+    $.each(insidePieces, function (index, piece) {
+        $(piece).addClass('toOpacity0');
+    });
+    $('#womanVideo').addClass('toOpacity1');
+    setTimeout(() => {
+        $('#womanVideo').removeClass('invisible');
+        $('#crackGlass').currentTime = 8;
+        $('#crackGlass').trigger('play');
+    }, 0);
 
-  setTimeout(() => {
-    for (let piece of pieceContainer) {
-      piece.classList.add("invisible");
-    }
-  }, 3000);
+    setTimeout(() => {
+        $.each(pieceContainer, function (index, piece) {
+            $(piece).addClass('invisible');
+        });
+    }, 3000);
 
-  setTimeout(() => {
-    womanVideo.play();
-    womanVideo.loop = true;
-    fluteSong.play();
-  }, 3100);
+    setTimeout(() => {
+        $('#womanVideo').trigger('play');
+        $('#womanVideo').attr('loop', 'loop');
+        $('#fluteSong').trigger('play');
+    }, 3100);
 
-  setTimeout(() => {
-    womanVideo.loop = false;
-  }, 30900);
+    setTimeout(() => {
+        $('#womanVideo').loop = false;
+    }, 30900);
 };
 
 const mouseUpFunction = (draggable) => {
+
   mouseDown = false;
   const child = $(draggable).children();
   const match = getClosestContainer(child);
@@ -112,14 +118,14 @@ const mouseUpFunction = (draggable) => {
     draggable.style.opacity = "0.3";
     tappingGlass.play();
   }
-
-  draggable.classList.remove("dragging");
-  if (!startedAnimation) {
-    checkInsidePieces();
-  }
+    draggable.classList.remove('dragging');
+    if (!startedAnimation) {
+        checkInsidePieces();
+    }
 };
 
 const mouseDownFunction = (e, draggable) => {
+
   startX = e.clientX;
   startY = e.clientY;
   if (!mousePosition || getPieceClass(draggable, inside)) return;
@@ -161,6 +167,7 @@ $('.draggable').each( function(i, el){
   $(el).on("mouseup", (e) => {
     mouseUpFunction(el);
   });
+
 });
 
 /*
