@@ -1,5 +1,4 @@
-const secondContainer = document.querySelector('.secondContainer'),
-    piece = /(piece)/g,
+const piece = /(piece)/g,
     inside = /(inside)/g;
 
 let mousePosition = { x: null, y: null },
@@ -25,11 +24,8 @@ const getPieceClass = (element, regex) => {
 // Aylen
 const getClosestContainer = (childOfDrag) => {
     const listOfPieceContainers = [...$('.pContainer')];
-    // const childRect = childOfDrag.getBoundingClientRect();
-    // ---- Testeando offset para reemplazar getBoundingClientRect, devuelve error si el objeto no fue seleccionado con jquery, devuelve undefined
     const childOffset = childOfDrag.offset();
 
-    // console.log('childRect x', childRect.x, 'childRect y', childRect.y)
     const closestmap = listOfPieceContainers.map((container) => {
         const containerRect = $(container).offset();
         const distanceX = childOffset.left - containerRect.left;
@@ -61,7 +57,7 @@ const matchClass = (draggable, child, resultclass) => {
         }, 0);
     } else {
         $('#tappingGlass').trigger('play');
-        draggable.style.opacity = '0.3';
+        draggable.css({ opacity: '0.3' });
     }
 };
 // comprobar cuántas piezas hay en su lugar
@@ -72,7 +68,8 @@ const checkInsidePieces = () => {
     if (insidePieces.length === 28) {
         startedAnimation = true;
         initAnimation(insidePieces);
-    } else return;
+    }
+    return;
 };
 
 // Iniciar animación final
@@ -85,12 +82,12 @@ const initAnimation = (insidePieces) => {
     $('#womanVideo').addClass('toOpacity1');
     setTimeout(() => {
         $('#womanVideo').removeClass('invisible');
-        $('#crackGlass').currentTime = 8;
+        $('#crackGlass').prop('currentTime', 8);
         $('#crackGlass').trigger('play');
     }, 0);
 
     setTimeout(() => {
-        $.each(pieceContainer, function (index, piece) {
+        $.each(function (index, piece) {
             $(piece).addClass('invisible');
         });
     }, 3000);
@@ -102,7 +99,7 @@ const initAnimation = (insidePieces) => {
     }, 3100);
 
     setTimeout(() => {
-        $('#womanVideo').loop = false;
+        $('#womanVideo').removeAttr('loop');
     }, 30900);
 };
 const mouseUpFunction = (draggable) => {
@@ -112,7 +109,9 @@ const mouseUpFunction = (draggable) => {
     if (match) {
         matchClass($(draggable), child, match);
     } else {
-        draggable.style.opacity = '0.3';
+        $(draggable).css({
+            opacity: '0.3'
+        });
         $('#tappingGlass').trigger('play');
     }
     $(child).removeClass('dragging');
@@ -168,6 +167,8 @@ $('.draggable').each(function (i, el) {
 IMPLEMENTAR  DESPUÉS
 
 // const ids = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyOne', 'twentyTwo', 'twentyThree', 'twentyFour', 'twentyFive', 'twentySix', 'twentySeven', 'twentyEight']
+
+const secondContainer = document.querySelector('.secondContainer')
 
 const createDiv = (num, idNum) => {
   const newDiv = document.createElement('div')
