@@ -24,20 +24,19 @@ const getPieceClass = (element, regex) => {
 // Aylen
 const getClosestContainer = (childOfDrag) => {
   const listOfPieceContainers = [...$('.pContainer')];
-  const childRect = childOfDrag.getBoundingClientRect();
+  // const childRect = childOfDrag.getBoundingClientRect();
   // ---- Testeando offset para reemplazar getBoundingClientRect, devuelve error si el objeto no fue seleccionado con jquery, devuelve undefined
-  //  const test = childOfDrag.offset()
-  // const el = $('.piece19')?.offset()
-  // console.log('el x', el.offsetTop, 'el y', el.offsetLeft)
-  // console.log(childOfDrag)
+   const childOffset = childOfDrag.offset()
+  
   // console.log('childRect x', childRect.x, 'childRect y', childRect.y)
   const closestmap = listOfPieceContainers.map((container) => {
-    const containerRect = container.getBoundingClientRect();
-    const distanceX = childRect.x - containerRect.x;
-    const distanceY = childRect.y - containerRect.y;
+    const containerRect = $(container).offset()
+    const distanceX = childOffset.left - containerRect.left;
+    const distanceY = childOffset.top - containerRect.top;
     const distance = Math.hypot(distanceX ** 2 + distanceY ** 2);
-    return { distance: distance, container: container };
+    return { distance: distance, container: $(container) };
   });
+
   const filtered = closestmap.filter((container) => {
     if (container.distance <= 450) {
       return container;
@@ -105,10 +104,10 @@ const initAnimation = (insidePieces) => {
 
 const mouseUpFunction = (draggable) => {
   mouseDown = false;
-  const child = draggable.children[0];
+  const child = $(draggable).children();
   const match = getClosestContainer(child);
   if (match) {
-    matchClass(draggable, child, match);
+    // matchClass($(draggable), child, match);
   } else {
     draggable.style.opacity = "0.3";
     tappingGlass.play();
@@ -129,9 +128,12 @@ const mouseDownFunction = (e, draggable) => {
   selectedDraggable = draggable; // Seleccionar el draggable
   diff.y = mousePosition.y - draggable.offsetTop; // Calcula la diferencia entre la posición del mouse y la posición del draggable para que quede debajo del mouse
   diff.x = mousePosition.x - draggable.offsetLeft; 
-  draggable.style.zIndex = "1000";
-  draggable.classList.add("dragging");
-  draggable.style.opacity = "1";
+  
+  $(draggable).css({
+    zIndex: "1000",
+    opacity: '1'
+  })
+  .addClass('dragging')
 };
 
 // Aylen
@@ -142,14 +144,16 @@ window.addEventListener("mousemove", (e) => {
 
   let offsetY = mousePosition.y - diff.y; // Calcula la posición en la que va a quedar el draggable
   let offsetX = mousePosition.x - diff.x;
-  selectedDraggable.style.top = offsetY + "px"; // Asigno la posición en la que va a quedar el draggable cuando lo suelte
-  selectedDraggable.style.left = offsetX + "px";
-});
 
+  $(selectedDraggable).css({
+    top: `${offsetY}px`,
+    left: `${offsetX}px`
+  }) // Asigno la posición en la que va a quedar el draggable cuando lo suelte
+  
+});
 
 $('.draggable').each( function(i, el){
   
-
   $(el).on("mousedown", (e) => {
     mouseDownFunction(e, el);
   });
