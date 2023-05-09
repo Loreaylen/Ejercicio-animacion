@@ -1,6 +1,4 @@
-const  tappingGlass = document.querySelector('#tappingGlass'),
-    chimes = document.querySelector('#chimes'),
-    piece = /(piece)/g,
+const piece = /(piece)/g,
     inside = /(inside)/g;
 
 let mousePosition = { x: null, y: null },
@@ -13,12 +11,10 @@ let mousePosition = { x: null, y: null },
 
 // Función para buscar la clase con el número de la pieza
 
-// YO
 const getPieceClass = (element, regex) => {
-    return $(element).attr('class').split(' ').find((el) => regex.test(el)) || false
+    return $(element).attr('class').split(' ').find((el) => regex.test(el)) || false;
 };
 
-// Aylen
 const getClosestContainer = (childOfDrag) => {
   const listOfPieceContainers = [...$('.pContainer')];
   const childOffset = childOfDrag.offset()
@@ -38,7 +34,6 @@ const getClosestContainer = (childOfDrag) => {
   return filtered.length === 0 ? false : filtered[0].container;
 };
 
-// Aylen
 const matchClass = (draggable, child, closest) => {
     const pieceNumber = getPieceClass(child, piece);
     const matchTo = getPieceClass(closest, piece);
@@ -52,27 +47,23 @@ const matchClass = (draggable, child, closest) => {
             $('#chimes').trigger('play');
         }, 0);
     } else {
-        tappingGlass.play();
-        $(draggable).css({
-          opacity: '0.3'
-        })
+        $('#tappingGlass').trigger('play');
+        draggable.css({ opacity: '0.3' });
     }
 };
 // comprobar cuántas piezas hay en su lugar
 
-// YO
 const checkInsidePieces = () => {
     const insidePieces = [...$('.inside')];
     if (insidePieces.length === 28) {
         startedAnimation = true;
         initAnimation(insidePieces);
-    } else return;
+    }
+    return;
 };
 
 // Iniciar animación final
 // Arreglar el detalle de la animación
-
-// YO
 const initAnimation = (insidePieces) => {
     $.each(insidePieces, function (index, piece) {
         $(piece).addClass('toOpacity0');
@@ -80,12 +71,12 @@ const initAnimation = (insidePieces) => {
     $('#womanVideo').addClass('toOpacity1');
     setTimeout(() => {
         $('#womanVideo').removeClass('invisible');
-        $('#crackGlass').currentTime = 8;
+        $('#crackGlass').prop('currentTime', 8);
         $('#crackGlass').trigger('play');
     }, 0);
 
     setTimeout(() => {
-        $.each(pieceContainer, function (index, piece) {
+        $.each(function (index, piece) {
             $(piece).addClass('invisible');
         });
     }, 3000);
@@ -97,12 +88,10 @@ const initAnimation = (insidePieces) => {
     }, 3100);
 
     setTimeout(() => {
-        $('#womanVideo').loop = false;
+        $('#womanVideo').removeAttr('loop');
     }, 30900);
 };
-
 const mouseUpFunction = (draggable) => {
-
   mouseDown = false;
   const child = $(draggable).children();
   const closest = getClosestContainer(child);
@@ -121,55 +110,54 @@ const mouseUpFunction = (draggable) => {
 };
 
 const mouseDownFunction = (e, draggable) => {
+    startX = e.clientX;
+    startY = e.clientY;
+    if (!mousePosition || getPieceClass(draggable, inside)) return;
 
-  startX = e.clientX;
-  startY = e.clientY;
-  if (!mousePosition || getPieceClass(draggable, inside)) return;
+    mouseDown = true;
+    selectedDraggable = draggable; // Seleccionar el draggable
+    diff.y = mousePosition.y - draggable.offsetTop; // Calcula la diferencia entre la posición del mouse y la posición del draggable para que quede debajo del mouse
+    diff.x = mousePosition.x - draggable.offsetLeft;
 
-  mouseDown = true;
-  selectedDraggable = draggable; // Seleccionar el draggable
-  diff.y = mousePosition.y - draggable.offsetTop; // Calcula la diferencia entre la posición del mouse y la posición del draggable para que quede debajo del mouse
-  diff.x = mousePosition.x - draggable.offsetLeft; 
-  
-  $(draggable).css({
-    zIndex: "1000",
-    opacity: '1'
-  })
-  .addClass('dragging')
+    $(draggable)
+        .css({
+            zIndex: '1000',
+            opacity: '1'
+        })
+        .addClass('dragging');
 };
 
 // Aylen
-window.addEventListener("mousemove", (e) => {
-  mousePosition.x = e.clientX;
-  mousePosition.y = e.clientY;
-  if (!mouseDown) return; // No se va a activar si el mouseDown es false
+window.addEventListener('mousemove', (e) => {
+    mousePosition.x = e.clientX;
+    mousePosition.y = e.clientY;
+    if (!mouseDown) return; // No se va a activar si el mouseDown es false
 
-  let offsetY = mousePosition.y - diff.y; // Calcula la posición en la que va a quedar el draggable
-  let offsetX = mousePosition.x - diff.x;
+    let offsetY = mousePosition.y - diff.y; // Calcula la posición en la que va a quedar el draggable
+    let offsetX = mousePosition.x - diff.x;
 
-  $(selectedDraggable).css({
-    top: `${offsetY}px`,
-    left: `${offsetX}px`
-  }) // Asigno la posición en la que va a quedar el draggable cuando lo suelte
-  
+    $(selectedDraggable).css({
+        top: `${offsetY}px`,
+        left: `${offsetX}px`
+    }); // Asigno la posición en la que va a quedar el draggable cuando lo suelte
 });
 
-$('.draggable').each( function(i, el){
-  
-  $(el).on("mousedown", (e) => {
-    mouseDownFunction(e, el);
-  });
+$('.draggable').each(function (i, el) {
+    $(el).on('mousedown', (e) => {
+        mouseDownFunction(e, el);
+    });
 
-  $(el).on("mouseup", (e) => {
-    mouseUpFunction(el);
-  });
-
+    $(el).on('mouseup', (e) => {
+        mouseUpFunction(el);
+    });
 });
 
 /*
 IMPLEMENTAR  DESPUÉS
 
 // const ids = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyOne', 'twentyTwo', 'twentyThree', 'twentyFour', 'twentyFive', 'twentySix', 'twentySeven', 'twentyEight']
+
+const secondContainer = document.querySelector('.secondContainer')
 
 const createDiv = (num, idNum) => {
   const newDiv = document.createElement('div')
