@@ -1,6 +1,4 @@
-const draggables = document.querySelectorAll(".draggable"),
-  pieceContainer = document.querySelectorAll(".pContainer"),
-  secondContainer = document.querySelector(".secondContainer"),
+const secondContainer = document.querySelector(".secondContainer"),
   crackGlass = document.querySelector("#crackGlass"),
   tappingGlass = document.querySelector("#tappingGlass"),
   chimes = document.querySelector("#chimes"),
@@ -23,11 +21,16 @@ const getPieceClass = (element, regex) => {
     Object.values(element?.classList).find((el) => regex.test(el)) || false
   );
 };
-
-const getClosestContainer = (drag, childOfDrag) => {
-  const listOfPieceContainers = [...pieceContainer];
+// Aylen
+const getClosestContainer = (childOfDrag) => {
+  const listOfPieceContainers = [...$('.pContainer')];
   const childRect = childOfDrag.getBoundingClientRect();
-
+  // ---- Testeando offset para reemplazar getBoundingClientRect, devuelve error si el objeto no fue seleccionado con jquery, devuelve undefined
+  //  const test = childOfDrag.offset()
+  // const el = $('.piece19')?.offset()
+  // console.log('el x', el.offsetTop, 'el y', el.offsetLeft)
+  // console.log(childOfDrag)
+  // console.log('childRect x', childRect.x, 'childRect y', childRect.y)
   const closestmap = listOfPieceContainers.map((container) => {
     const containerRect = container.getBoundingClientRect();
     const distanceX = childRect.x - containerRect.x;
@@ -43,6 +46,7 @@ const getClosestContainer = (drag, childOfDrag) => {
   return filtered.length === 0 ? false : filtered[0].container;
 };
 
+// Aylen
 const matchClass = (draggable, child, resultclass) => {
   const pieceNumber = getPieceClass(child, piece);
   const matchTo = getPieceClass(resultclass, piece);
@@ -102,7 +106,7 @@ const initAnimation = (insidePieces) => {
 const mouseUpFunction = (draggable) => {
   mouseDown = false;
   const child = draggable.children[0];
-  const match = getClosestContainer(draggable, child);
+  const match = getClosestContainer(child);
   if (match) {
     matchClass(draggable, child, match);
   } else {
@@ -123,35 +127,35 @@ const mouseDownFunction = (e, draggable) => {
 
   mouseDown = true;
   selectedDraggable = draggable; // Seleccionar el draggable
-  diff.y = mousePosition.y - draggable.offsetTop;
+  diff.y = mousePosition.y - draggable.offsetTop; // Calcula la diferencia entre la posición del mouse y la posición del draggable para que quede debajo del mouse
   diff.x = mousePosition.x - draggable.offsetLeft; 
-  let offsetY = mousePosition.y - diff.y;
-  let offsetX = mousePosition.x - diff.x;
-  draggable.style.top = offsetY + "px";
-  draggable.style.left = offsetX + "px";
   draggable.style.zIndex = "1000";
   draggable.classList.add("dragging");
   draggable.style.opacity = "1";
 };
 
+// Aylen
 window.addEventListener("mousemove", (e) => {
   mousePosition.x = e.clientX;
   mousePosition.y = e.clientY;
   if (!mouseDown) return; // No se va a activar si el mouseDown es false
 
-  let offsetY = mousePosition.y - diff.y;
+  let offsetY = mousePosition.y - diff.y; // Calcula la posición en la que va a quedar el draggable
   let offsetX = mousePosition.x - diff.x;
-  selectedDraggable.style.top = offsetY + "px"; // Con esto le asigno la posición en la que va a quedar el draggable cuando lo suelte
+  selectedDraggable.style.top = offsetY + "px"; // Asigno la posición en la que va a quedar el draggable cuando lo suelte
   selectedDraggable.style.left = offsetX + "px";
 });
 
-draggables.forEach((draggable) => {
-  draggable.addEventListener("mousedown", (e) => {
-    mouseDownFunction(e, draggable);
+
+$('.draggable').each( function(i, el){
+  
+
+  $(el).on("mousedown", (e) => {
+    mouseDownFunction(e, el);
   });
 
-  draggable.addEventListener("mouseup", (e) => {
-    mouseUpFunction(draggable);
+  $(el).on("mouseup", (e) => {
+    mouseUpFunction(el);
   });
 });
 
@@ -201,4 +205,11 @@ const generateRandomDivs = (ids) => {
     }
   }
 }
+*/
+
+/*
+BUGS
+- Hacer scroll mientras arrastro una pieza hace que se corra el mouse de encima de la pieza y no te deje soltarla
+- Bug en el comienzo de la animación, la última pieza desaparece y vuelve a aparecer cuando comienza
+
 */
