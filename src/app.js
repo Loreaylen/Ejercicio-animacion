@@ -11,42 +11,33 @@ let mousePosition = { x: null, y: null },
 
 // Función para buscar la clase con el número de la pieza
 
-// YO
 const getPieceClass = (element, regex) => {
-    return (
-        $(element)
-            .attr('class')
-            .split(' ')
-            .find((el) => regex.test(el)) || false
-    );
+    return $(element).attr('class').split(' ').find((el) => regex.test(el)) || false;
 };
 
-// Aylen
 const getClosestContainer = (childOfDrag) => {
-    const listOfPieceContainers = [...$('.pContainer')];
-    const childOffset = childOfDrag.offset();
-
-    const closestmap = listOfPieceContainers.map((container) => {
-        const containerRect = $(container).offset();
-        const distanceX = childOffset.left - containerRect.left;
-        const distanceY = childOffset.top - containerRect.top;
-        const distance = Math.hypot(distanceX ** 2 + distanceY ** 2);
-        return { distance: distance, container: $(container) };
-    });
-
-    const filtered = closestmap.filter((container) => {
-        if (container.distance <= 450) {
-            return container;
-        } else return false;
-    });
-    return filtered.length === 0 ? false : filtered[0].container;
+  const listOfPieceContainers = [...$('.pContainer')];
+  const childOffset = childOfDrag.offset()
+ 
+  const closestmap = listOfPieceContainers.map((container) => {
+    const containerRect = $(container).offset()
+    const distanceX = childOffset.left - containerRect.left;
+    const distanceY = childOffset.top - containerRect.top;
+    const distance = Math.hypot(distanceX ** 2 + distanceY ** 2);
+    return { distance: distance, container: $(container) };
+  });
+  const filtered = closestmap.filter((container) => {
+    if (container.distance <= 450) {
+      return container;
+    } else return false;
+  });
+  return filtered.length === 0 ? false : filtered[0].container;
 };
 
-// Aylen
-const matchClass = (draggable, child, resultclass) => {
+const matchClass = (draggable, child, closest) => {
     const pieceNumber = getPieceClass(child, piece);
-    const matchTo = getPieceClass(resultclass, piece);
-    const parentNode = resultclass.parent(); // El contenedor padre del nodo para encajar la pieza (rectángulos)
+    const matchTo = getPieceClass(closest, piece);
+    const parentNode = closest.parent(); // El contenedor padre del nodo para encajar la pieza (rectángulos)
     if (pieceNumber === matchTo) {
         parentNode.append(draggable);
         draggable.removeClass('draggable');
@@ -62,7 +53,6 @@ const matchClass = (draggable, child, resultclass) => {
 };
 // comprobar cuántas piezas hay en su lugar
 
-// YO
 const checkInsidePieces = () => {
     const insidePieces = [...$('.inside')];
     if (insidePieces.length === 28) {
@@ -74,7 +64,6 @@ const checkInsidePieces = () => {
 
 // Iniciar animación final
 // Arreglar el detalle de la animación
-// YO
 const initAnimation = (insidePieces) => {
     $.each(insidePieces, function (index, piece) {
         $(piece).addClass('toOpacity0');
@@ -103,18 +92,18 @@ const initAnimation = (insidePieces) => {
     }, 30900);
 };
 const mouseUpFunction = (draggable) => {
-    mouseDown = false;
-    const child = $(draggable).children();
-    const match = getClosestContainer(child);
-    if (match) {
-        matchClass($(draggable), child, match);
-    } else {
-        $(draggable).css({
-            opacity: '0.3'
-        });
-        $('#tappingGlass').trigger('play');
-    }
-    $(child).removeClass('dragging');
+  mouseDown = false;
+  const child = $(draggable).children();
+  const closest = getClosestContainer(child);
+  if (closest) {
+     matchClass($(draggable), child, closest);
+  } else {
+    $(draggable).css({
+      opacity: "0.3"
+    })
+    $('#tappingGlass').trigger('play');
+  }
+    $(draggable).removeClass('dragging');
     if (!startedAnimation) {
         checkInsidePieces();
     }
