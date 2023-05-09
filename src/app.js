@@ -1,5 +1,4 @@
-const secondContainer = document.querySelector('.secondContainer'),
-    tappingGlass = document.querySelector('#tappingGlass'),
+const  tappingGlass = document.querySelector('#tappingGlass'),
     chimes = document.querySelector('#chimes'),
     piece = /(piece)/g,
     inside = /(inside)/g;
@@ -16,19 +15,14 @@ let mousePosition = { x: null, y: null },
 
 // YO
 const getPieceClass = (element, regex) => {
-    return (
-        Object.values(element?.classList).find((el) => regex.test(el)) || false
-    );
+    return $(element).attr('class').split(' ').find((el) => regex.test(el)) || false
 };
 
 // Aylen
 const getClosestContainer = (childOfDrag) => {
   const listOfPieceContainers = [...$('.pContainer')];
-  // const childRect = childOfDrag.getBoundingClientRect();
-  // ---- Testeando offset para reemplazar getBoundingClientRect, devuelve error si el objeto no fue seleccionado con jquery, devuelve undefined
-   const childOffset = childOfDrag.offset()
-  
-  // console.log('childRect x', childRect.x, 'childRect y', childRect.y)
+  const childOffset = childOfDrag.offset()
+ 
   const closestmap = listOfPieceContainers.map((container) => {
     const containerRect = $(container).offset()
     const distanceX = childOffset.left - containerRect.left;
@@ -36,32 +30,32 @@ const getClosestContainer = (childOfDrag) => {
     const distance = Math.hypot(distanceX ** 2 + distanceY ** 2);
     return { distance: distance, container: $(container) };
   });
-
   const filtered = closestmap.filter((container) => {
     if (container.distance <= 450) {
       return container;
     } else return false;
   });
   return filtered.length === 0 ? false : filtered[0].container;
-
 };
 
 // Aylen
-const matchClass = (draggable, child, resultclass) => {
+const matchClass = (draggable, child, closest) => {
     const pieceNumber = getPieceClass(child, piece);
-    const matchTo = getPieceClass(resultclass, piece);
-    const parentNode = resultclass.parentNode; // El contenedor padre del nodo para encajar la pieza (rectángulos)
+    const matchTo = getPieceClass(closest, piece);
+    const parentNode = closest.parent(); // El contenedor padre del nodo para encajar la pieza (rectángulos)
     if (pieceNumber === matchTo) {
-        parentNode.appendChild(draggable);
-        draggable.classList.remove('draggable');
-        draggable.removeAttribute('style');
-        draggable.classList.add('inside');
+        parentNode.append(draggable);
+        draggable.removeClass('draggable');
+        draggable.removeAttr('style');
+        draggable.addClass('inside');
         setTimeout(() => {
-            chimes.play();
+            $('#chimes').trigger('play');
         }, 0);
     } else {
         tappingGlass.play();
-        draggable.style.opacity = '0.3';
+        $(draggable).css({
+          opacity: '0.3'
+        })
     }
 };
 // comprobar cuántas piezas hay en su lugar
@@ -111,14 +105,16 @@ const mouseUpFunction = (draggable) => {
 
   mouseDown = false;
   const child = $(draggable).children();
-  const match = getClosestContainer(child);
-  if (match) {
-    // matchClass($(draggable), child, match);
+  const closest = getClosestContainer(child);
+  if (closest) {
+     matchClass($(draggable), child, closest);
   } else {
-    draggable.style.opacity = "0.3";
-    tappingGlass.play();
+    $(draggable).css({
+      opacity: "0.3"
+    })
+    $('#tappingGlass').trigger('play');
   }
-    draggable.classList.remove('dragging');
+    $(draggable).removeClass('dragging');
     if (!startedAnimation) {
         checkInsidePieces();
     }
